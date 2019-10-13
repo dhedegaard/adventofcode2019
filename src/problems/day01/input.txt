@@ -1,16 +1,3 @@
-import React from "react"
-import { Link } from "gatsby"
-
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-import day01 from "../problems/day01"
-
-const IndexPage = () => (
-  <Layout>
-    <SEO title="HEJ!" />
-    <h1>HEJ!</h1>
-    <p>
-      {day01(`
 +14
 -15
 +7
@@ -968,9 +955,4 @@ const IndexPage = () => (
 -17
 -23
 -21
--71664`)}
-    </p>
-  </Layout>
-)
-
-export default IndexPage
+-71664
