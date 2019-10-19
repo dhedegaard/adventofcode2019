@@ -4,12 +4,23 @@
  *
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
+import MenuIcon from "@material-ui/icons/Menu"
 
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import { CssBaseline } from "@material-ui/core"
+import {
+  CssBaseline,
+  Box,
+  Grid,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Paper,
+} from "@material-ui/core"
+import NavMenu from "./NavMenu"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -35,7 +46,21 @@ const Layout = ({ children }) => {
         />
       </Helmet>
       <CssBaseline />
-      <main>{children}</main>
+      <main>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6">Advent of Code 2019</Typography>
+          </Toolbar>
+        </AppBar>
+        <Grid container>
+          <Grid item md={2}>
+            <Paper>
+              <NavMenu />
+            </Paper>
+          </Grid>
+          <Grid item>{children}</Grid>
+        </Grid>
+      </main>
     </>
   )
 }
