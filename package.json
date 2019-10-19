@@ -5,6 +5,8 @@
   "version": "0.1.0",
   "author": "Dennis Hedegaard <dennis@dhedegaard.dk>",
   "dependencies": {
+    "@material-ui/core": "^4.5.1",
+    "dom-helpers": "^5.1.2",
     "gatsby": "^2.15.36",
     "gatsby-cli": "^2.8.3",
     "gatsby-image": "^2.2.27",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.144",
+    "@types/react-helmet": "^5.0.12",
     "prettier": "^1.18.2"
   },
   "keywords": [
