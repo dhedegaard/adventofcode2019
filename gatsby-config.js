@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Advent of Code 2019`,
+    description: `Implementation for Advent of Code 2019`,
+    author: `Dennis Hedegaard <dennis@dhedegaard.dk>`,
   },
   plugins: [
     `gatsby-plugin-typescript`,

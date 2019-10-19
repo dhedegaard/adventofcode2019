@@ -7,7 +7,7 @@ import day01 from "../problems/day01"
 
 const IndexPage = () => (
   <Layout>
-    <SEO title="HEJ!" />
+    <SEO title="Index" />
     <h1>HEJ!</h1>
     <p>
       {day01(`
