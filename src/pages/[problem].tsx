@@ -83,7 +83,7 @@ const Problem: NextPage = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Advent of Code 2019 - {problem}</title>
+        <title>{`Advent of Code 2019 - ${problem}`}</title>
       </Helmet>
       {state.executing && <GlobalLoading />}
       <h1>{problem}</h1>

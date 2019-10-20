@@ -24,6 +24,7 @@ const Layout: React.FC = ({ children }) => {
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />
         <title>Advent of Code 2019</title>
+        <link rel="icon" type="image/png" href="/favicon.png" />
       </Helmet>
       <CssBaseline />
       <main>
