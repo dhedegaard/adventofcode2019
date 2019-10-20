@@ -31,13 +31,15 @@ const Layout: React.FC = ({ children }) => {
             <Typography variant="h6">Advent of Code 2019</Typography>
           </Toolbar>
         </AppBar>
-        <Grid container>
+        <Grid container spacing={3}>
           <Grid item md={2}>
             <Paper>
               <NavMenu />
             </Paper>
           </Grid>
-          <Grid item>{children}</Grid>
+          <Grid item md>
+            {children}
+          </Grid>
         </Grid>
       </main>
     </>

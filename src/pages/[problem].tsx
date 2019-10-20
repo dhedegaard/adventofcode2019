@@ -3,13 +3,17 @@ import Layout from "../components/Layout"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { Solution } from "../problems"
-import { createGlobalStyle } from "styled-components"
-import { TextField, Button, Grid, Typography } from "@material-ui/core"
+import styled, { createGlobalStyle } from "styled-components"
+import { TextField, Button, Grid, Typography, Paper } from "@material-ui/core"
 
 const GlobalLoading = createGlobalStyle`
 body {
   cursor: wait;
 }
+`
+
+const SolvedGrid = styled(Grid)`
+  align-self: flex-end;
 `
 
 const initialState = {
@@ -79,8 +83,8 @@ const Problem: NextPage = () => {
     <Layout>
       {state.executing && <GlobalLoading />}
       <h1>{problem}</h1>
-      <Grid container>
-        <Grid item xs={4}>
+      <Grid container spacing={3}>
+        <Grid item xs>
           <Typography variant="h6">Input:</Typography>
           <TextField
             variant="outlined"
@@ -95,7 +99,7 @@ const Problem: NextPage = () => {
             }
           />
         </Grid>
-        <Grid item xs={4}>
+        <SolvedGrid item xs>
           <Button
             color="primary"
             variant="contained"
@@ -121,8 +125,8 @@ const Problem: NextPage = () => {
           >
             Execute
           </Button>
-        </Grid>
-        <Grid item xs={4}>
+        </SolvedGrid>
+        <Grid item xs>
           <Typography variant="h6">Result:</Typography>
           {state.result !== "" && (
             <>
