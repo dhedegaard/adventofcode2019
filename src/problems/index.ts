@@ -1,5 +1,9 @@
 export const splitLines = (text: string): string[] =>
-  text.replace(/\r\n/g, "\n").split("\n")
+  text
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .filter(e => e != null)
+    .map(e => e.trim())
 
 export const problems = ["day01"]
 
