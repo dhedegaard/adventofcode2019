@@ -10,6 +10,20 @@ import {
   Paper,
 } from "@material-ui/core"
 import NavMenu from "./NavMenu"
+import styled from "styled-components"
+
+const ContentPaper = styled(Paper)`
+  padding: 20px;
+  margin-top: 20px;
+`
+
+const ContentGrid = styled(Grid)`
+  flex-grow: 1;
+`
+
+const OuterGrid = styled(Grid)`
+  width: 100% !important;
+`
 
 const Layout: React.FC = ({ children }) => {
   return (
@@ -27,22 +41,24 @@ const Layout: React.FC = ({ children }) => {
         <link rel="icon" type="image/png" href="/favicon.png" />
       </Helmet>
       <CssBaseline />
-      <main>
+      <header>
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6">Advent of Code 2019</Typography>
           </Toolbar>
         </AppBar>
-        <Grid container spacing={3}>
+      </header>
+      <main>
+        <OuterGrid container spacing={3}>
           <Grid item md={2}>
             <Paper>
               <NavMenu />
             </Paper>
           </Grid>
-          <Grid item md>
-            {children}
-          </Grid>
-        </Grid>
+          <ContentGrid item md>
+            <ContentPaper>{children}</ContentPaper>
+          </ContentGrid>
+        </OuterGrid>
       </main>
     </>
   )

@@ -4,7 +4,7 @@ import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { Solution } from "../problems"
 import styled, { createGlobalStyle } from "styled-components"
-import { TextField, Button, Grid, Typography } from "@material-ui/core"
+import { TextField, Button, Grid, Typography, Paper } from "@material-ui/core"
 import Helmet from "react-helmet"
 
 const GlobalLoading = createGlobalStyle`
@@ -79,6 +79,7 @@ const Problem: NextPage = () => {
     },
     initialState
   )
+  console.log("slice:", problem)
 
   return (
     <Layout>
@@ -86,60 +87,77 @@ const Problem: NextPage = () => {
         <title>{`Advent of Code 2019 - ${problem}`}</title>
       </Helmet>
       {state.executing && <GlobalLoading />}
-      <h1>{problem}</h1>
-      <Grid container spacing={3}>
-        <Grid item xs>
-          <Typography variant="h6">Input:</Typography>
-          <TextField
-            variant="outlined"
-            multiline
-            rows={10}
-            value={state.input}
-            onChange={event =>
-              dispatch({
-                type: "CHANGE_INPUT",
-                input: event.currentTarget.value,
-              })
-            }
-          />
-        </Grid>
-        <SolvedGrid item xs>
-          <Button
-            color="primary"
-            variant="contained"
-            disabled={state.input === "" || state.executing}
-            type="button"
-            onClick={async () => {
-              if (state.input.length < 1 || func == null) {
-                return
-              }
-
-              // Run the function.
-              const before = new Date()
-              const result = await func(state.input)
-              const after = new Date()
-
-              // Show the result.
-              dispatch({
-                type: "SET_RESULT",
-                duration: after.getTime() - before.getTime(),
-                result: result,
-              })
-            }}
+      <Typography variant="h6" component="h1">
+        Advent of Code 2019 - {problem}
+      </Typography>
+      {problem != null && (
+        <Typography>
+          Link to the{" "}
+          <a
+            href={`https://adventofcode.com/2019/day/${problem.slice(3)}`}
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            Execute
-          </Button>
-        </SolvedGrid>
-        <Grid item xs>
-          <Typography variant="h6">Result:</Typography>
-          {state.result !== "" && (
-            <>
-              <p>Result: {state.result}</p>
-              <p>Duration: {state.duration!.toLocaleString()} ms</p>
-            </>
-          )}
+            problem
+          </a>
+          .
+        </Typography>
+      )}
+      <Paper>
+        <Grid container spacing={3}>
+          <Grid item xs>
+            <Typography variant="h6">Input:</Typography>
+            <TextField
+              variant="outlined"
+              multiline
+              rows={10}
+              value={state.input}
+              onChange={event =>
+                dispatch({
+                  type: "CHANGE_INPUT",
+                  input: event.currentTarget.value,
+                })
+              }
+            />
+          </Grid>
+          <SolvedGrid item xs>
+            <Button
+              color="primary"
+              variant="contained"
+              disabled={state.input === "" || state.executing}
+              type="button"
+              onClick={async () => {
+                if (state.input.length < 1 || func == null) {
+                  return
+                }
+
+                // Run the function.
+                const before = new Date()
+                const result = await func(state.input)
+                const after = new Date()
+
+                // Show the result.
+                dispatch({
+                  type: "SET_RESULT",
+                  duration: after.getTime() - before.getTime(),
+                  result: result,
+                })
+              }}
+            >
+              Execute
+            </Button>
+          </SolvedGrid>
+          <Grid item xs>
+            <Typography variant="h6">Result:</Typography>
+            {state.result !== "" && (
+              <>
+                <p>Result: {state.result}</p>
+                <p>Duration: {state.duration!.toLocaleString()} ms</p>
+              </>
+            )}
+          </Grid>
         </Grid>
-      </Grid>
+      </Paper>
     </Layout>
   )
 }

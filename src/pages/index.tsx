@@ -1,7 +1,7 @@
 import React from "react"
 
 import Layout from "../components/Layout"
-import { Typography, Paper } from "@material-ui/core"
+import { Typography } from "@material-ui/core"
 
 const IndexPage = () => (
   <Layout>
