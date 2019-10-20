@@ -35,3 +35,24 @@ steps:
   env:
     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+
+- script: |
+    aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/*"
+  displayName: "Invalidate Cloudfront edge cache"
+  env:
+    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+    CDN_DISTRIBUTION_ID: $(CDN_DISTRIBUTION_ID)
+
+
+- script: |
+    curl -X DELETE -v \
+      https://api.cloudflare.com/client/v4/zones/b6f5f6304bf6e3edf1e14b340d0bff29/purge_cache \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/json' \
+      -H 'x-auth-email: dennis@dhedegaard.dk' \
+      -H 'x-auth-key: '$CLOUDFLARE_AUTH_KEY \
+      -d '{"files": ["https://aoc2019.dhedegaard.dk"]}'
+  displayName: "Purge Cloudflare cache"
+  env:
+    CLOUDFLARE_AUTH_KEY: $(CLOUDFLARE_AUTH_KEY)
