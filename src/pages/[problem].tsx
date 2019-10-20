@@ -4,7 +4,8 @@ import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { Solution } from "../problems"
 import styled, { createGlobalStyle } from "styled-components"
-import { TextField, Button, Grid, Typography, Paper } from "@material-ui/core"
+import { TextField, Button, Grid, Typography } from "@material-ui/core"
+import Helmet from "react-helmet"
 
 const GlobalLoading = createGlobalStyle`
 body {
@@ -81,6 +82,9 @@ const Problem: NextPage = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Advent of Code 2019 - {problem}</title>
+      </Helmet>
       {state.executing && <GlobalLoading />}
       <h1>{problem}</h1>
       <Grid container spacing={3}>
