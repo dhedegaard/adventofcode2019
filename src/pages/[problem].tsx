@@ -43,7 +43,6 @@ type Actions =
 const Problem: NextPage = () => {
   const router = useRouter()
   const { problem } = router.query
-  console.log("P:", problem)
 
   const func = React.useMemo<Solution>(
     () =>
@@ -79,7 +78,6 @@ const Problem: NextPage = () => {
     },
     initialState
   )
-  console.log("slice:", problem)
 
   return (
     <Layout>
