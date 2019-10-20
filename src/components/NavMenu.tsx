@@ -1,21 +1,22 @@
 import React from "react"
 import { List, ListItem, ListItemText } from "@material-ui/core"
-import { Link } from "gatsby"
-import UnstyledLink from "./UnstyledLink"
 import { problems } from "../problems"
+import Link from "next/link"
 
 const NavMenu: React.FC = () => (
   <List component="nav">
     <ListItem button>
-      <ListItemText>
-        <UnstyledLink to="/">ASDF</UnstyledLink>
-      </ListItemText>
-      {problems.map(problem => (
-        <ListItemText key={problem}>
-          <UnstyledLink to={`/${problem}`}>{problem}</UnstyledLink>
-        </ListItemText>
-      ))}
+      <Link href="/">
+        <ListItemText>Index</ListItemText>
+      </Link>
     </ListItem>
+    {problems.map(problem => (
+      <ListItem button key={problem}>
+        <Link href={`/${problem}`}>
+          <ListItemText>{problem}</ListItemText>
+        </Link>
+      </ListItem>
+    ))}
   </List>
 )
 

@@ -1,38 +1,17 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-import MenuIcon from "@material-ui/icons/Menu"
-
 import React from "react"
 import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import {
   CssBaseline,
-  Box,
   Grid,
   AppBar,
   Toolbar,
   Typography,
-  IconButton,
   Paper,
 } from "@material-ui/core"
 import NavMenu from "./NavMenu"
 
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
-
+const Layout: React.FC = ({ children }) => {
   return (
     <>
       <Helmet>
