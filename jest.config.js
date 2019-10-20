@@ -7,7 +7,7 @@ module.exports = {
   globals: {
     "ts-jest": {
       useBabelrc: true,
-      tsConfigFile: "jest.tsconfig.json",
+      tsConfig: "jest.tsconfig.json",
     },
   },
   coveragePathIgnorePatterns: ["/node_modules/"],
