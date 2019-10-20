@@ -26,9 +26,12 @@ steps:
   displayName: "Install AWS CLI"
 
 - script: |
-    aws s3 sync --delete --acl public-read ./build s3://aoc2019.dhedegaard.dk
+    aws s3 sync --delete --acl public-read ./out s3://aoc2019.dhedegaard.dk
     aws s3 cp \
       --content-type 'text/html; charset=utf-8' \
       --acl public-read \
-      ./build/index.html s3://aoc2019.dhedegaard.dk/index.html
+      ./out/index.html s3://aoc2019.dhedegaard.dk/index.html
   displayName: "deploy to S3"
+  env:
+    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
