@@ -18,7 +18,7 @@ steps:
 - script: |
     npm install -g yarn
     yarn
-    yarn export
+    yarn build
   displayName: 'Build'
 
 - script: |
