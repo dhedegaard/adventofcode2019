@@ -18,8 +18,7 @@ steps:
 - script: |
     npm install -g yarn
     yarn
-    yarn build
-  displayName: 'Build'
+  displayName: 'Install yarn and NPM dependencies'
 
 - script: |
     curl https://sh.rustup.rs -sSf | sh -s -- -y
@@ -29,6 +28,10 @@ steps:
 - script: |
     yarn test
   displayName: Run tests
+
+- script: |
+    yarn build
+  displayName: Build release
 
 - script: |
     pip install awscli --upgrade --ignore-installed six
