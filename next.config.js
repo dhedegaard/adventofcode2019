@@ -1,17 +1,13 @@
-const fs = require("fs")
-const path = require("path")
+const { getDays } = require("./src/mapper-utils")
 
 module.exports = {
   exportPathMap: async (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
   ) => {
-    const problems = fs
-      .readdirSync(path.resolve(__dirname, "src", "problems"))
-      .filter(e => e.startsWith("day") && e.length === 5)
     return {
       "/": { page: "/" },
-      ...problems
+      ...getDays()
         .map(problem => [
           `/${problem}`,
           { page: "/[problem]", query: { problem } },

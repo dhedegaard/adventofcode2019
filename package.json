@@ -38,8 +38,7 @@
     "dev": "next",
     "start": "next start",
     "build": "next build && next export",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test": "sh -c 'cd aoc2019 && cargo test'",
+    "wasm": "sh -c 'cd aoc2019 && wasm-pack build --out-dir=../src/aoc2019'"
   }
 }

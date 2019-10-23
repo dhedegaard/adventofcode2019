@@ -1,7 +1,7 @@
 import React from "react"
 import { List, ListItem, ListItemText } from "@material-ui/core"
-import { problems } from "../problems"
 import Link from "next/link"
+import { getDays } from "../mapper-utils"
 
 const NavMenu: React.FC = () => (
   <List component="nav">
@@ -10,7 +10,7 @@ const NavMenu: React.FC = () => (
         <ListItemText>Index</ListItemText>
       </Link>
     </ListItem>
-    {problems.map(problem => (
+    {getDays().map(problem => (
       <ListItem button key={problem}>
         <Link href={`/${problem}`}>
           <ListItemText>{problem}</ListItemText>

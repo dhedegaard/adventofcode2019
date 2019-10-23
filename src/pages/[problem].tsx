@@ -2,10 +2,10 @@ import React from "react"
 import Layout from "../components/Layout"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
-import { Solution } from "../problems"
 import styled, { createGlobalStyle } from "styled-components"
 import { TextField, Button, Grid, Typography, Paper } from "@material-ui/core"
 import Helmet from "react-helmet"
+import useAoc2019 from "../hooks/useAoc2019"
 
 const GlobalLoading = createGlobalStyle`
 body {
@@ -44,13 +44,7 @@ const Problem: NextPage = () => {
   const router = useRouter()
   const { problem } = router.query
 
-  const func = React.useMemo<Solution>(
-    () =>
-      typeof problem !== "string" || problem.length < 1
-        ? undefined
-        : require(`../problems/${problem}`).default,
-    [problem]
-  )
+  const aoc2019 = useAoc2019(problem as string)
 
   const [state, dispatch] = React.useReducer<React.Reducer<State, Actions>>(
     (state, action) => {
@@ -89,17 +83,31 @@ const Problem: NextPage = () => {
         Advent of Code 2019 - {problem}
       </Typography>
       {problem != null && (
-        <Typography>
-          Link to the{" "}
-          <a
-            href={`https://adventofcode.com/2019/day/${problem.slice(3)}`}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            problem
-          </a>
-          .
-        </Typography>
+        <>
+          <Typography>
+            Link to the{" "}
+            <a
+              href={`https://adventofcode.com/2019/day/${problem.slice(3)}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              problem
+            </a>
+            .
+          </Typography>
+          {aoc2019 != null && aoc2019.raw_input != null && (
+            <Button
+              onClick={() =>
+                dispatch({
+                  type: "CHANGE_INPUT",
+                  input: aoc2019.raw_input!(),
+                })
+              }
+            >
+              Load puzzle input
+            </Button>
+          )}
+        </>
       )}
       <Paper>
         <Grid container spacing={3}>
@@ -122,16 +130,22 @@ const Problem: NextPage = () => {
             <Button
               color="primary"
               variant="contained"
-              disabled={state.input === "" || state.executing}
+              disabled={
+                state.input === "" ||
+                state.executing ||
+                aoc2019 == null ||
+                aoc2019.part1 == null
+              }
               type="button"
               onClick={async () => {
-                if (state.input.length < 1 || func == null) {
+                if (aoc2019 == null || aoc2019.part1 == null) {
                   return
                 }
 
                 // Run the function.
                 const before = new Date()
-                const result = await func(state.input)
+                // TODO: Handle rejected promises somehow.
+                const result = aoc2019.part1(state.input)
                 const after = new Date()
 
                 // Show the result.
@@ -142,7 +156,38 @@ const Problem: NextPage = () => {
                 })
               }}
             >
-              Execute
+              Part1
+            </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              disabled={
+                state.input === "" ||
+                state.executing ||
+                aoc2019 == null ||
+                aoc2019.part2 == null
+              }
+              type="button"
+              onClick={async () => {
+                if (aoc2019 == null || aoc2019.part2 == null) {
+                  return
+                }
+
+                // Run the function.
+                const before = new Date()
+                // TODO: Handle rejected promises somehow.
+                const result = aoc2019.part2(state.input)
+                const after = new Date()
+
+                // Show the result.
+                dispatch({
+                  type: "SET_RESULT",
+                  duration: after.getTime() - before.getTime(),
+                  result: result,
+                })
+              }}
+            >
+              Part2
             </Button>
           </SolvedGrid>
           <Grid item xs>
