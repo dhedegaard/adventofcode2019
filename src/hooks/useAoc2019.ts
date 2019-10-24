@@ -12,14 +12,15 @@ const useAoc2019 = (
     [key: string]: (...args: any[]) => any
   }>(null)
 
-  React.useEffect(() => {
-    if (typeof window === "undefined") {
-      return
-    }
-    // import(/* webpackPreload: false */ "../aoc2019/aoc2019").then(module =>
-    //   setModule(module as any)
-    // )
-  })
+  // React.useEffect(() => {
+  //   if (typeof window === "undefined") {
+  //     return
+  //   }
+  //   const loadWasm = () =>
+  //     import("../aoc2019/aoc2019").then(module => setModule(module as any))
+  //   window.addEventListener("mousemove", loadWasm)
+  //   return () => window.removeEventListener("mousemove", loadWasm)
+  // })
 
   return module == null
     ? module
