@@ -44,7 +44,7 @@ steps:
         --content-type 'text/html; charset=utf-8' \
         --acl public-read \
         ./public s3://aoc2019.dhedegaard.dk/index.html \
-        --exclude "*"
+        --exclude "*" \
         --include "*.html"
     displayName: "deploy to S3"
     env:
