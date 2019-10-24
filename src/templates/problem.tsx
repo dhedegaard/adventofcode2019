@@ -1,7 +1,5 @@
 import React from "react"
 import Layout from "../components/Layout"
-import { NextPage } from "next"
-import { useRouter } from "next/router"
 import styled, { createGlobalStyle } from "styled-components"
 import { TextField, Button, Grid, Typography, Paper } from "@material-ui/core"
 import Helmet from "react-helmet"
@@ -40,9 +38,14 @@ type Actions =
       type: "SET_EXECUTING"
     }
 
-const Problem: NextPage = () => {
-  const router = useRouter()
-  const { problem } = router.query
+type Props = {
+  pageContext: {
+    day: string
+  }
+}
+
+const Problem: React.FC<Props> = props => {
+  const problem = props.pageContext.day
 
   const aoc2019 = useAoc2019(problem as string)
 

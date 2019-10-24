@@ -1,20 +1,16 @@
 import React from "react"
 import { List, ListItem, ListItemText } from "@material-ui/core"
-import Link from "next/link"
+import { navigate } from "gatsby"
 import { getDays } from "../mapper-utils"
 
 const NavMenu: React.FC = () => (
   <List component="nav">
-    <ListItem button>
-      <Link href="/">
-        <ListItemText>Index</ListItemText>
-      </Link>
+    <ListItem button onClick={() => navigate("/")}>
+      <ListItemText>Index</ListItemText>
     </ListItem>
     {getDays().map(problem => (
-      <ListItem button key={problem}>
-        <Link href={`/${problem}`}>
-          <ListItemText>{problem}</ListItemText>
-        </Link>
+      <ListItem button key={problem} onClick={() => navigate(`/${problem}`)}>
+        <ListItemText>{problem}</ListItemText>
       </ListItem>
     ))}
   </List>

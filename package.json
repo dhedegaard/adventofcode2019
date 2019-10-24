@@ -7,8 +7,10 @@
   "dependencies": {
     "@material-ui/core": "^4.5.1",
     "dom-helpers": "^5.1.2",
+    "gatsby": "^2.17.2",
+    "gatsby-cli": "^2.8.5",
+    "gatsby-plugin-typescript": "^2.1.15",
     "lodash": "^4.17.15",
-    "next": "^9.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
@@ -19,7 +21,6 @@
   "devDependencies": {
     "@types/jest": "^24.0.19",
     "@types/lodash": "^4.14.144",
-    "@types/next": "^8.0.6",
     "@types/node": "^12.11.1",
     "@types/react": "^16.9.9",
     "@types/react-dom": "^16.9.2",
@@ -35,9 +36,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "next",
-    "start": "next start",
-    "build": "yarn wasm && next build && next export",
+    "watch": "gatsby develop",
+    "start": "gatsby build",
+    "build": "yarn wasm && yarn start",
     "test": "sh -c 'cd aoc2019 && cargo test'",
     "wasm": "sh -c 'cd aoc2019 && wasm-pack build --out-dir=../src/aoc2019'"
   }
