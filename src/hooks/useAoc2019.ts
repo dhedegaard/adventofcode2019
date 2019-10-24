@@ -12,15 +12,21 @@ const useAoc2019 = (
     [key: string]: (...args: any[]) => any
   }>(null)
 
-  // React.useEffect(() => {
-  //   if (typeof window === "undefined") {
-  //     return
-  //   }
-  //   const loadWasm = () =>
-  //     import("../aoc2019/aoc2019").then(module => setModule(module as any))
-  //   window.addEventListener("mousemove", loadWasm)
-  //   return () => window.removeEventListener("mousemove", loadWasm)
-  // })
+  React.useEffect(() => {
+    const w = window as any
+    // Look for aoc2019 on the window object.
+    if (w.aoc2019 != null) {
+      setModule(w.aoc2019)
+    }
+    // If not found, wait for a postMessage with aoc2019.
+    const listener = (event: MessageEvent) => {
+      if (event.data === "aoc2019") {
+        setModule(w.aoc2019)
+      }
+    }
+    window.addEventListener("message", listener, false)
+    return () => window.removeEventListener("message", listener, false)
+  }, [])
 
   return module == null
     ? module

@@ -40,6 +40,6 @@
     "start": "gatsby build",
     "build": "yarn wasm && yarn start",
     "test": "sh -c 'cd aoc2019 && cargo test'",
-    "wasm": "sh -c 'cd aoc2019 && wasm-pack build --out-dir=../src/aoc2019'"
+    "wasm": "sh -c 'cd aoc2019 && wasm-pack build --out-dir=../static/aoc2019 --target=web'"
   }
 }
