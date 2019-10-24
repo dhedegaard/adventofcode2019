@@ -46,6 +46,12 @@ steps:
         ./public s3://aoc2019.dhedegaard.dk/index.html \
         --exclude "*" \
         --include "*.html"
+      aws s3 sync \
+        --content-type 'application/wasm' \
+        --acl public-read \
+        ./public s3://aoc2019.dhedegaard.dk \
+        --exclude "*" \
+        --include "*.wasm"
     displayName: "deploy to S3"
     env:
       AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
