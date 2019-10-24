@@ -80,18 +80,6 @@ const Problem: React.FC<Props> = props => {
     <Layout>
       <Helmet>
         <title>{`Advent of Code 2019 - ${problem}`}</title>
-        <script type="module">
-          {/* We load an ES6 module here, since that is how you load WASM without a bundler:
-           * <https://rustwasm.github.io/docs/wasm-bindgen/examples/without-a-bundler.html>
-           */}
-          {`
-          import init, * as aoc2019 from '/aoc2019/aoc2019.js';
-          init().then(() => {
-            window.aoc2019 = aoc2019
-            window.postMessage('aoc2019')
-          })
-          `}
-        </script>
       </Helmet>
       {state.executing && <GlobalLoading />}
       <Typography variant="h6" component="h1">
