@@ -13,7 +13,12 @@ const useAoc2019 = (
   }>(null)
 
   React.useEffect(() => {
-    import("../aoc2019/aoc2019").then(module => setModule(module as any))
+    if (typeof window === "undefined") {
+      return
+    }
+    // import(/* webpackPreload: false */ "../aoc2019/aoc2019").then(module =>
+    //   setModule(module as any)
+    // )
   })
 
   return module == null
