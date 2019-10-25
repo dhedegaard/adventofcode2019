@@ -39,15 +39,20 @@ steps:
     displayName: "Install AWS CLI"
 
   - script: |
-      aws s3 sync --delete --acl public-read ./public s3://aoc2019.dhedegaard.dk
-      aws s3 cp \
+      aws s3 sync \
+        --delete \
+        --acl public-read \
+        ./public s3://aoc2019.dhedegaard.dk \
+        --exclude "*.html" \
+        --exclude "*.wasm"
+      aws s3 sync \
         --content-type 'text/html; charset=utf-8' \
         --acl public-read \
         ./public s3://aoc2019.dhedegaard.dk/index.html \
         --exclude "*" \
         --include "*.html"
       aws s3 sync \
-        --content-type 'application/wasm' \
+        --content-type "application/wasm" \
         --acl public-read \
         ./public s3://aoc2019.dhedegaard.dk \
         --exclude "*" \
