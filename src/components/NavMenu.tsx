@@ -9,7 +9,7 @@ const NavMenu: React.FC = () => (
       <ListItemText>Index</ListItemText>
     </ListItem>
     {getDays().map(problem => (
-      <ListItem button key={problem} onClick={() => navigate(`/${problem}`)}>
+      <ListItem button key={problem} onClick={() => navigate(`/${problem}/`)}>
         <ListItemText>{problem}</ListItemText>
       </ListItem>
     ))}

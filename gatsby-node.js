@@ -10,7 +10,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   )
   getDays().forEach(day => {
     createPage({
-      path: `/${day}`,
+      path: `/${day}/`,
       component: problemsTemplate,
       context: {
         day,
