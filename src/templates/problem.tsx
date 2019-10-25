@@ -98,12 +98,12 @@ const Problem: React.FC<Props> = props => {
             </a>
             .
           </Typography>
-          {aoc2019 != null && aoc2019.raw_input != null && (
+          {aoc2019 != null && aoc2019.input != null && (
             <Button
               onClick={() =>
                 dispatch({
                   type: "CHANGE_INPUT",
-                  input: aoc2019.raw_input!(),
+                  input: aoc2019.input!(),
                 })
               }
             >

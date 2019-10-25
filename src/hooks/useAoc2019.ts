@@ -4,7 +4,7 @@ import React from "react"
 const useAoc2019 = (
   problem: string
 ): null | {
-  raw_input?: () => string
+  input?: () => string
   part1?: (arg: string) => string
   part2?: (arg: string) => string
 } => {
@@ -14,15 +14,15 @@ const useAoc2019 = (
 
   React.useEffect(() => {
     const w = window as any
+    // If not found, wait for a postMessage with aoc2019.
+    const listener = (event: MessageEvent) => {
+      if (event.data === "aoc2019" && module == null) {
+        setModule(w.aoc2019)
+      }
+    }
     // Look for aoc2019 on the window object.
     if (w.aoc2019 != null) {
       setModule(w.aoc2019)
-    }
-    // If not found, wait for a postMessage with aoc2019.
-    const listener = (event: MessageEvent) => {
-      if (event.data === "aoc2019") {
-        setModule(w.aoc2019)
-      }
     }
     window.addEventListener("message", listener, false)
     return () => window.removeEventListener("message", listener, false)
