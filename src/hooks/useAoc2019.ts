@@ -32,8 +32,8 @@ const useAoc2019 = (
     ? module
     : Object.fromEntries(
         Object.entries(module)
-          .filter(([name]) => name.startsWith(`${problem}__`))
-          .map(([name, func]) => [name.slice(7), func])
+          .filter(([name]) => name.startsWith(`${problem}_`))
+          .map(([name, func]) => [name.slice(6), func])
       )
 }
 
