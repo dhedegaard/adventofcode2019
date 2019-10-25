@@ -44,11 +44,12 @@ steps:
         --acl public-read \
         ./public s3://aoc2019.dhedegaard.dk \
         --exclude "*.html" \
-        --exclude "*.wasm"
+        --exclude "*.wasm" \
+        --include "*"
       aws s3 sync \
         --content-type 'text/html; charset=utf-8' \
         --acl public-read \
-        ./public s3://aoc2019.dhedegaard.dk/index.html \
+        ./public s3://aoc2019.dhedegaard.dk \
         --exclude "*" \
         --include "*.html"
       aws s3 sync \
