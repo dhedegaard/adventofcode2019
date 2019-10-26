@@ -8,9 +8,12 @@ import {
   Toolbar,
   Typography,
   Paper,
+  createMuiTheme,
 } from "@material-ui/core"
 import NavMenu from "./NavMenu"
 import styled from "styled-components"
+import { ThemeProvider } from "@material-ui/styles"
+import { blueGrey, pink } from "@material-ui/core/colors"
 
 const ContentPaper = styled(Paper)`
   padding: 20px;
@@ -41,6 +44,20 @@ init().then(() => {
 });
 `
 
+const theme = createMuiTheme({
+  palette: {
+    primary: blueGrey,
+    secondary: pink,
+  },
+})
+
+const App: React.FC = ({ children }) => (
+  <>
+    <CssBaseline />
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  </>
+)
+
 type Props = {
   path: string
   children: React.ReactNode
@@ -48,7 +65,7 @@ type Props = {
 
 const Layout: React.FC<Props> = props => {
   return (
-    <>
+    <App>
       <Helmet>
         <meta
           name="viewport"
@@ -58,7 +75,6 @@ const Layout: React.FC<Props> = props => {
         <link rel="icon" type="image/png" href="/favicon.png" />
         <script type="module">{moduleScript}</script>
       </Helmet>
-      <CssBaseline />
       <header>
         <AppBar position="static">
           <Toolbar>
@@ -79,7 +95,7 @@ const Layout: React.FC<Props> = props => {
           </ContentGrid>
         </OuterGrid>
       </main>
-    </>
+    </App>
   )
 }
 
