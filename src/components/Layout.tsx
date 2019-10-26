@@ -50,10 +50,6 @@ const Layout: React.FC<Props> = props => {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
         />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-        />
         <title>Advent of Code 2019</title>
         <link rel="icon" type="image/png" href="/favicon.png" />
         <script type="module" async>
@@ -71,7 +67,7 @@ const Layout: React.FC<Props> = props => {
       <main>
         <OuterGrid container spacing={3}>
           <Grid item md={2}>
-            <Paper>
+            <Paper square>
               <NavMenu path={props.path} />
             </Paper>
           </Grid>
