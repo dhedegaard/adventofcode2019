@@ -6,19 +6,24 @@ type Props = {
   path: string
 }
 
+const siteUrlWithPath = (siteUrl: string, path: string): string => {
+  const url = new URL(siteUrl)
+  url.pathname = path
+  return url.toJSON()
+}
+
 const OpenGraph: React.FC<Props> = props => {
-  const siteMetadata = useSiteMetadata()
-  const url = new URL(siteMetadata.siteUrl)
-  url.pathname = props.path
-  const image = new URL(siteMetadata.siteUrl)
-  image.pathname = "/favicon.png"
+  const { title, description, siteUrl } = useSiteMetadata()
   return (
     <Helmet>
-      <meta content={siteMetadata.title} property="og:title" />
+      <meta content={title} property="og:title" />
       <meta content="website" property="og:type"></meta>
-      <meta content={siteMetadata.description} property="og:description" />
-      <meta content={image.toString()} property="og:image" />
-      <meta content={url.toString()} property="og:url" />
+      <meta content={description} property="og:description" />
+      <meta
+        content={siteUrlWithPath(siteUrl, "/favicon.png")}
+        property="og:image"
+      />
+      <meta content={siteUrlWithPath(siteUrl, props.path)} property="og:url" />
     </Helmet>
   )
 }

@@ -6,6 +6,7 @@ export default (): {
   description: string
   title: string
   author: string
+  githubUrl: string
 } => {
   const data = useStaticQuery(graphql`
     {
@@ -15,6 +16,7 @@ export default (): {
           description
           title
           author
+          githubUrl
         }
       }
     }

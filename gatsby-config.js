@@ -4,6 +4,7 @@ module.exports = {
     description: `Implementations for Advent of Code 2019`,
     author: `Dennis Hedegaard <dennis@dhedegaard.dk>`,
     siteUrl: `https://aoc2019.dhedegaard.dk/`,
+    githubUrl: `https://github.com/dhedegaard/adventofcode2019/`,
   },
   plugins: [
     `gatsby-plugin-typescript`,
