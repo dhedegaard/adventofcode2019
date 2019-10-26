@@ -100,7 +100,7 @@ type Props = GatsbyPageProps<{
 const Problem: React.FC<Props> = props => {
   const problem = props.pageContext.day
 
-  const aoc2019 = useAoc2019(problem as string)
+  const aoc2019 = useAoc2019(problem)
 
   const [state, dispatch] = React.useReducer<React.Reducer<State, Actions>>(
     (state, action) => {

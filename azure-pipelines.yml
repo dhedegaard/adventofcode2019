@@ -40,27 +40,29 @@ steps:
 
   - script: |
       aws s3 sync \
+        ./public s3://aoc2019.dhedegaard.dk \
         --delete \
         --acl public-read \
-        ./public s3://aoc2019.dhedegaard.dk \
+        --include "*" \
         --exclude "*.html" \
         --exclude "*.wasm" \
-        --include "*" \
         --cache-control public,max-age=31536000
       aws s3 sync \
-        --content-type 'text/html; charset=utf-8' \
-        --acl public-read \
         ./public s3://aoc2019.dhedegaard.dk \
+        --acl public-read \
         --exclude "*" \
         --include "*.html" \
-        --cache-control public,max-age=31536000
+        --content-type 'text/html; charset=utf-8' \
+        --cache-control public,max-age=31536000 \
+        --delete
       aws s3 sync \
-        --content-type "application/wasm" \
-        --acl public-read \
         ./public s3://aoc2019.dhedegaard.dk \
+        --acl public-read \
         --exclude "*" \
         --include "*.wasm" \
-        --cache-control public,max-age=31536000
+        --content-type "application/wasm" \
+        --cache-control public,max-age=31536000 \
+        --delete
     displayName: "deploy to S3"
     env:
       AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)

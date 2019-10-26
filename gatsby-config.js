@@ -43,12 +43,22 @@ module.exports = {
         name: `Advent of Code 2019`,
         short_name: `AoC2019`,
         start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
+        background_color: `#fafafa`,
+        theme_color: `#546e7a`,
         display: `standalone`,
         icon: `static/favicon.png`,
       },
     },
     `gatsby-plugin-offline`,
   ],
+}
+
+exports.onCreateWebpackConfig = ({ actions, stage }) => {
+  // If production JavaScript and CSS build
+  if (stage === "build-javascript") {
+    // Turn off source maps
+    actions.setWebpackConfig({
+      devtool: false,
+    })
+  }
 }

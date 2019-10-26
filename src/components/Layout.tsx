@@ -29,6 +29,11 @@ const ContentGrid = styled(Grid)`
 const OuterGrid = styled(Grid)`
   width: 100% !important;
   height: 100%;
+
+  & > * {
+    padding-bottom: 0 !important;
+    height: calc(100% - 64px);
+  }
 `
 
 const Logo = styled.img`
