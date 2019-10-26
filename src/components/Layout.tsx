@@ -15,6 +15,7 @@ import styled, { createGlobalStyle } from "styled-components"
 import { ThemeProvider } from "@material-ui/styles"
 import { blueGrey } from "@material-ui/core/colors"
 import OpenGraph from "./OpenGraph"
+import useSiteMetadata from "../hooks/useSiteMetadata"
 
 const ContentPaper = styled(Paper)`
   padding: 20px;
@@ -72,6 +73,7 @@ type Props = {
 }
 
 const Layout: React.FC<Props> = props => {
+  const { description } = useSiteMetadata()
   return (
     <App>
       <OpenGraph path={props.path} />
@@ -80,6 +82,7 @@ const Layout: React.FC<Props> = props => {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
         />
+        <meta name="description" content={description} />
         <title>Advent of Code 2019</title>
         <link rel="icon" type="image/png" href="/favicon.png" />
         <script type="module">{moduleScript}</script>
