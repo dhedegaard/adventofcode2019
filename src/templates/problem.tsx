@@ -151,7 +151,9 @@ const Problem: React.FC<Props> = props => {
       <Grid container spacing={3}>
         <Grid item sm={12} md>
           <Typography variant="h6">Input:</Typography>
-          <Typography>Put your input into the text box below.</Typography>
+          <Typography>
+            Copy/paste your input into the text box below.
+          </Typography>
           <InputTextField
             variant="outlined"
             multiline
