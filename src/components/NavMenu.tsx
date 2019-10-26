@@ -1,7 +1,12 @@
 import React from "react"
-import { List, ListItem, ListItemText } from "@material-ui/core"
+import { List, ListItem, ListItemText, Paper } from "@material-ui/core"
 import { Link } from "gatsby"
 import { getDays } from "../mapper-utils"
+import styled from "styled-components"
+
+const ContainerPaper = styled(Paper)`
+  height: 100%;
+`
 
 type Props = {
   path: string
@@ -9,22 +14,30 @@ type Props = {
 
 const NavMenu: React.FC<Props> = ({ path }) => {
   return (
-    <List component="nav">
-      <ListItem button to="/" component={Link} divider selected={path === "/"}>
-        <ListItemText>Index</ListItemText>
-      </ListItem>
-      {getDays().map(problem => (
+    <ContainerPaper square>
+      <List component="nav">
         <ListItem
           button
-          key={problem}
-          to={`/${problem}/`}
+          to="/"
           component={Link}
-          selected={path === `/${problem}/`}
+          divider
+          selected={path === "/"}
         >
-          <ListItemText>{problem}</ListItemText>
+          <ListItemText>Index</ListItemText>
         </ListItem>
-      ))}
-    </List>
+        {getDays().map(problem => (
+          <ListItem
+            button
+            key={problem}
+            to={`/${problem}/`}
+            component={Link}
+            selected={path === `/${problem}/`}
+          >
+            <ListItemText>{problem}</ListItemText>
+          </ListItem>
+        ))}
+      </List>
+    </ContainerPaper>
   )
 }
 

@@ -11,9 +11,9 @@ import {
   createMuiTheme,
 } from "@material-ui/core"
 import NavMenu from "./NavMenu"
-import styled from "styled-components"
+import styled, { createGlobalStyle } from "styled-components"
 import { ThemeProvider } from "@material-ui/styles"
-import { blueGrey, pink } from "@material-ui/core/colors"
+import { blueGrey } from "@material-ui/core/colors"
 
 const ContentPaper = styled(Paper)`
   padding: 20px;
@@ -26,10 +26,17 @@ const ContentGrid = styled(Grid)`
 
 const OuterGrid = styled(Grid)`
   width: 100% !important;
+  height: 100%;
 `
 
 const Logo = styled.img`
   margin-right: 16px;
+`
+
+const GlobalTheme = createGlobalStyle`
+html, body, body > div, body > div > div, main {
+  height: 100%;
+}
 `
 
 /**
@@ -53,6 +60,7 @@ const theme = createMuiTheme({
 const App: React.FC = ({ children }) => (
   <>
     <CssBaseline />
+    <GlobalTheme />
     <ThemeProvider theme={theme}>{children}</ThemeProvider>
   </>
 )
@@ -85,9 +93,7 @@ const Layout: React.FC<Props> = props => {
       <main>
         <OuterGrid container spacing={3}>
           <Grid item md={2} sm={4} xs={6}>
-            <Paper square>
-              <NavMenu path={props.path} />
-            </Paper>
+            <NavMenu path={props.path} />
           </Grid>
           <ContentGrid item md={10} sm={8} xs={6}>
             <ContentPaper>{props.children}</ContentPaper>
