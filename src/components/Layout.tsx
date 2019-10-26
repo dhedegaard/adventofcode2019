@@ -37,7 +37,12 @@ init().then(() => {
 })
 `
 
-const Layout: React.FC = ({ children }) => {
+type Props = {
+  path: string
+  children: React.ReactNode
+}
+
+const Layout: React.FC<Props> = props => {
   return (
     <>
       <Helmet>
@@ -67,11 +72,11 @@ const Layout: React.FC = ({ children }) => {
         <OuterGrid container spacing={3}>
           <Grid item md={2}>
             <Paper>
-              <NavMenu />
+              <NavMenu path={props.path} />
             </Paper>
           </Grid>
           <ContentGrid item md>
-            <ContentPaper>{children}</ContentPaper>
+            <ContentPaper>{props.children}</ContentPaper>
           </ContentGrid>
         </OuterGrid>
       </main>
@@ -81,6 +86,7 @@ const Layout: React.FC = ({ children }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  path: PropTypes.string.isRequired,
 }
 
 export default Layout

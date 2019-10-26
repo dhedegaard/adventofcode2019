@@ -4,6 +4,7 @@ import styled, { createGlobalStyle } from "styled-components"
 import { TextField, Button, Grid, Typography, Paper } from "@material-ui/core"
 import Helmet from "react-helmet"
 import useAoc2019 from "../hooks/useAoc2019"
+import { GatsbyPageProps } from "../@types/aoc2019"
 
 const GlobalLoading = createGlobalStyle`
 body {
@@ -38,11 +39,9 @@ type Actions =
       type: "SET_EXECUTING"
     }
 
-type Props = {
-  pageContext: {
-    day: string
-  }
-}
+type Props = GatsbyPageProps<{
+  day: string
+}>
 
 const Problem: React.FC<Props> = props => {
   const problem = props.pageContext.day
@@ -77,7 +76,7 @@ const Problem: React.FC<Props> = props => {
   )
 
   return (
-    <Layout>
+    <Layout path={props.path}>
       <Helmet>
         <title>{`Advent of Code 2019 - ${problem}`}</title>
       </Helmet>
