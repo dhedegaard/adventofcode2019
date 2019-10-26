@@ -1,7 +1,14 @@
 import React from "react"
 import Layout from "../components/Layout"
 import styled, { createGlobalStyle } from "styled-components"
-import { TextField, Button, Grid, Typography } from "@material-ui/core"
+import {
+  TextField,
+  Button,
+  Grid,
+  Typography,
+  Paper,
+  Link,
+} from "@material-ui/core"
 import Helmet from "react-helmet"
 import useAoc2019 from "../hooks/useAoc2019"
 import { GatsbyPageProps } from "../@types/aoc2019"
@@ -31,6 +38,19 @@ const Center = styled.div`
   display: flex;
   justify-content: center;
 `
+
+const ResultBox = styled(Paper)`
+  min-width: 200px;
+  padding: 20px;
+`
+
+const TitleBox = styled(Grid)`
+  flex-grow: 1;
+`
+
+const TitleLink = styled(Button)`
+  margin-left: 8px;
+` as typeof Button & { rel?: string }
 
 const initialState = {
   input: "",
@@ -97,27 +117,41 @@ const Problem: React.FC<Props> = props => {
         <title>{`Advent of Code 2019 - ${problem}`}</title>
       </Helmet>
       {state.executing && <GlobalLoading />}
-      <Typography variant="h6" component="h1">
-        Advent of Code 2019 - {problem}
-      </Typography>
-      {problem != null && (
-        <>
-          <Typography>
-            Link to the{" "}
-            <a
+      <Grid container>
+        <TitleBox item>
+          <Typography variant="h6" component="h1">
+            Advent of Code 2019 - {problem}
+          </Typography>
+        </TitleBox>
+        {problem != null && (
+          <Grid item>
+            <TitleLink
               href={`https://adventofcode.com/2019/day/${problem.slice(3)}`}
               rel="noopener noreferrer"
               target="_blank"
+              variant="contained"
+              color="secondary"
+              component="a"
             >
-              problem
-            </a>
-            .
-          </Typography>
-        </>
-      )}
+              Advent of Code link
+            </TitleLink>
+            <TitleLink
+              href={`https://github.com/dhedegaard/adventofcode2019/blob/master/aoc2019/src/${problem}/mod.rs`}
+              rel="noopener noreferrer"
+              target="_blank"
+              variant="contained"
+              color="secondary"
+              component="a"
+            >
+              See implementation
+            </TitleLink>
+          </Grid>
+        )}
+      </Grid>
       <Grid container spacing={3}>
         <Grid item sm={12} md>
           <Typography variant="h6">Input:</Typography>
+          <Typography>Put your input into the text box below.</Typography>
           <InputTextField
             variant="outlined"
             multiline
@@ -152,7 +186,7 @@ const Problem: React.FC<Props> = props => {
           </Center>
           <Center>
             <Button
-              color="primary"
+              color="secondary"
               variant="contained"
               disabled={
                 state.input === "" ||
@@ -185,7 +219,7 @@ const Problem: React.FC<Props> = props => {
           </Center>
           <Center>
             <Button
-              color="primary"
+              color="secondary"
               variant="contained"
               disabled={
                 state.input === "" ||
@@ -219,11 +253,14 @@ const Problem: React.FC<Props> = props => {
         </SolvedGrid>
         <Grid item sm={12} md>
           <Typography variant="h6">Result:</Typography>
+          <Typography>
+            After execution, the result will be visible below.
+          </Typography>
           {state.result !== "" && (
-            <>
+            <ResultBox square>
               <p>Result: {state.result}</p>
               <p>Duration: {state.duration!.toLocaleString()} ms</p>
-            </>
+            </ResultBox>
           )}
         </Grid>
       </Grid>
