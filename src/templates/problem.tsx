@@ -168,7 +168,7 @@ const Problem: React.FC<Props> = props => {
       <Grid container spacing={3}>
         <Grid item sm={12} md>
           <Typography variant="h6">Input:</Typography>
-          <Typography>
+          <Typography paragraph>
             Copy/paste your input into the text box below.
           </Typography>
           <InputTextField
@@ -272,13 +272,15 @@ const Problem: React.FC<Props> = props => {
         </SolvedGrid>
         <Grid item sm={12} md>
           <Typography variant="h6">Result:</Typography>
-          <Typography>
+          <Typography paragraph>
             After execution, the result will be visible below.
           </Typography>
           {state.result !== "" && (
             <ResultBox square>
-              <p>Result: {state.result}</p>
-              <p>Duration: {state.duration!.toLocaleString()} ms</p>
+              <Typography paragraph>Result: {state.result}</Typography>
+              <Typography paragraph>
+                Duration: {state.duration!.toLocaleString()} ms
+              </Typography>
             </ResultBox>
           )}
         </Grid>

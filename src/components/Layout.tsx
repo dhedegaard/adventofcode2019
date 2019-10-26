@@ -13,7 +13,7 @@ import {
 import NavMenu from "./NavMenu"
 import styled, { createGlobalStyle } from "styled-components"
 import { ThemeProvider } from "@material-ui/styles"
-import { blueGrey } from "@material-ui/core/colors"
+import { blueGrey, red, teal } from "@material-ui/core/colors"
 import OpenGraph from "./OpenGraph"
 import useSiteMetadata from "../hooks/useSiteMetadata"
 
@@ -55,7 +55,10 @@ init().then(() => {
 
 const theme = createMuiTheme({
   palette: {
-    primary: blueGrey,
+    primary: {
+      ...blueGrey,
+      main: blueGrey["600"],
+    },
   },
 })
 
@@ -88,7 +91,7 @@ const Layout: React.FC<Props> = props => {
         <script type="module">{moduleScript}</script>
       </Helmet>
       <header>
-        <AppBar position="static">
+        <AppBar position="static" color="primary">
           <Toolbar>
             <Logo src="/favicon.png" width={32} height={32} alt="logo" />
             <Typography variant="h6">Advent of Code 2019</Typography>
