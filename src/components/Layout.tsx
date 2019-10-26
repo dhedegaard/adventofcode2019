@@ -32,10 +32,10 @@ const OuterGrid = styled(Grid)`
 const moduleScript = `
 import init, * as aoc2019 from '/aoc2019/aoc2019.js';
 init().then(() => {
-  window.aoc2019 = aoc2019
-  window.postMessage('aoc2019')
-})
-`
+  window.aoc2019 = aoc2019;
+  window.postMessage('aoc2019');
+});
+`.replace(/(\n|\s\s)/g, "")
 
 type Props = {
   path: string
