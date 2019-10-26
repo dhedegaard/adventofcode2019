@@ -25,6 +25,10 @@ const OuterGrid = styled(Grid)`
   width: 100% !important;
 `
 
+const Logo = styled.img`
+  margin-right: 16px;
+`
+
 /**
  * We load an ES6 module here, since that is how you load WASM without a bundler:
  * <https://rustwasm.github.io/docs/wasm-bindgen/examples/without-a-bundler.html>
@@ -35,16 +39,7 @@ init().then(() => {
   window.aoc2019 = aoc2019;
   window.postMessage('aoc2019');
 });
-`.replace(/(\n|\s\s)/g, "")
-
-const ModuleScript = React.memo(
-  () => (
-    <script type="module" async>
-      {moduleScript}
-    </script>
-  ),
-  () => true
-)
+`
 
 type Props = {
   path: string
@@ -54,7 +49,6 @@ type Props = {
 const Layout: React.FC<Props> = props => {
   return (
     <>
-      <ModuleScript />
       <Helmet>
         <meta
           name="viewport"
@@ -62,11 +56,13 @@ const Layout: React.FC<Props> = props => {
         />
         <title>Advent of Code 2019</title>
         <link rel="icon" type="image/png" href="/favicon.png" />
+        <script type="module">{moduleScript}</script>
       </Helmet>
       <CssBaseline />
       <header>
         <AppBar position="static">
           <Toolbar>
+            <Logo src="/favicon.png" width={32} height={32} alt="logo" />
             <Typography variant="h6">Advent of Code 2019</Typography>
           </Toolbar>
         </AppBar>

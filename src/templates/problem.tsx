@@ -1,7 +1,7 @@
 import React from "react"
 import Layout from "../components/Layout"
 import styled, { createGlobalStyle } from "styled-components"
-import { TextField, Button, Grid, Typography, Box } from "@material-ui/core"
+import { TextField, Button, Grid, Typography } from "@material-ui/core"
 import Helmet from "react-helmet"
 import useAoc2019 from "../hooks/useAoc2019"
 import { GatsbyPageProps } from "../@types/aoc2019"
@@ -20,6 +20,16 @@ const SolvedGrid = styled(Grid)`
 
 const InputTextField = styled(TextField)`
   width: 100%;
+
+  & textarea {
+    font-family: "Courier New", Courier, monospace;
+  }
+`
+
+const Center = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `
 
 const initialState = {
@@ -123,81 +133,89 @@ const Problem: React.FC<Props> = props => {
           />
         </Grid>
         <SolvedGrid item sm={12} md>
-          <Button
-            disabled={
-              aoc2019 == null || aoc2019.input == null || state.executing
-            }
-            onClick={() =>
-              dispatch({
-                type: "CHANGE_INPUT",
-                input: aoc2019!.input!(),
-              })
-            }
-          >
-            Load author's input
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            disabled={
-              state.input === "" ||
-              state.executing ||
-              aoc2019 == null ||
-              aoc2019.part1 == null
-            }
-            type="button"
-            onClick={async () => {
-              if (aoc2019 == null || aoc2019.part1 == null) {
-                return
+          <Center>
+            <Button
+              disabled={
+                aoc2019 == null || aoc2019.input == null || state.executing
               }
-
-              // Run the function.
-              const before = new Date()
-              // TODO: Handle rejected promises somehow.
-              const result = aoc2019.part1(state.input)
-              const after = new Date()
-
-              // Show the result.
-              dispatch({
-                type: "SET_RESULT",
-                duration: after.getTime() - before.getTime(),
-                result: result,
-              })
-            }}
-          >
-            Run part 1
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            disabled={
-              state.input === "" ||
-              state.executing ||
-              aoc2019 == null ||
-              aoc2019.part2 == null
-            }
-            type="button"
-            onClick={async () => {
-              if (aoc2019 == null || aoc2019.part2 == null) {
-                return
+              onClick={() =>
+                dispatch({
+                  type: "CHANGE_INPUT",
+                  input: aoc2019!.input!(),
+                })
               }
+              variant="contained"
+              color="secondary"
+            >
+              Load author's input
+            </Button>
+          </Center>
+          <Center>
+            <Button
+              color="primary"
+              variant="contained"
+              disabled={
+                state.input === "" ||
+                state.executing ||
+                aoc2019 == null ||
+                aoc2019.part1 == null
+              }
+              type="button"
+              onClick={async () => {
+                if (aoc2019 == null || aoc2019.part1 == null) {
+                  return
+                }
 
-              // Run the function.
-              const before = new Date()
-              // TODO: Handle rejected promises somehow.
-              const result = aoc2019.part2(state.input)
-              const after = new Date()
+                // Run the function.
+                const before = new Date()
+                // TODO: Handle rejected promises somehow.
+                const result = aoc2019.part1(state.input)
+                const after = new Date()
 
-              // Show the result.
-              dispatch({
-                type: "SET_RESULT",
-                duration: after.getTime() - before.getTime(),
-                result: result,
-              })
-            }}
-          >
-            Run part 2
-          </Button>
+                // Show the result.
+                dispatch({
+                  type: "SET_RESULT",
+                  duration: after.getTime() - before.getTime(),
+                  result: result,
+                })
+              }}
+            >
+              Run part 1
+            </Button>
+          </Center>
+          <Center>
+            <Button
+              color="primary"
+              variant="contained"
+              disabled={
+                state.input === "" ||
+                state.executing ||
+                aoc2019 == null ||
+                aoc2019.part2 == null
+              }
+              type="button"
+              onClick={async () => {
+                if (aoc2019 == null || aoc2019.part2 == null) {
+                  return
+                }
+
+                // Run the function.
+                const before = new Date()
+                // TODO: Handle rejected promises somehow.
+                const result = aoc2019.part2(state.input)
+                const after = new Date()
+
+                // Show the result.
+                dispatch({
+                  type: "SET_RESULT",
+                  duration: after.getTime() - before.getTime(),
+                  result: result,
+                })
+              }}
+            >
+              Run part 2
+            </Button>
+          </Center>
         </SolvedGrid>
         <Grid item sm={12} md>
           <Typography variant="h6">Result:</Typography>
