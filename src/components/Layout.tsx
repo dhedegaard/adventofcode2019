@@ -93,7 +93,7 @@ const Layout: React.FC<Props> = props => {
       <header>
         <AppBar position="static" color="primary">
           <Toolbar>
-            <Logo src="/favicon.png" width={32} height={32} alt="logo" />
+            <Logo src="/logo.png" width={32} height={32} alt="logo" />
             <Typography variant="h6">Advent of Code 2019</Typography>
           </Toolbar>
         </AppBar>
