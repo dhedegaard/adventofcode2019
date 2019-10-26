@@ -50,6 +50,10 @@ const TitleBox = styled(Grid)`
 
 const TitleLink = styled(Button)`
   margin-left: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
 ` as typeof Button & { rel?: string }
 
 const initialState = {
@@ -118,13 +122,13 @@ const Problem: React.FC<Props> = props => {
       </Helmet>
       {state.executing && <GlobalLoading />}
       <Grid container>
-        <TitleBox item>
+        <TitleBox item xs={12} md>
           <Typography variant="h6" component="h1">
             Advent of Code 2019 - {problem}
           </Typography>
         </TitleBox>
         {problem != null && (
-          <Grid item>
+          <Grid item xs={12} md="auto">
             <TitleLink
               href={`https://adventofcode.com/2019/day/${problem.slice(3)}`}
               rel="noopener noreferrer"
