@@ -14,6 +14,7 @@ import NavMenu from "./NavMenu"
 import styled, { createGlobalStyle } from "styled-components"
 import { ThemeProvider } from "@material-ui/styles"
 import { blueGrey } from "@material-ui/core/colors"
+import OpenGraph from "./OpenGraph"
 
 const ContentPaper = styled(Paper)`
   padding: 20px;
@@ -73,6 +74,7 @@ type Props = {
 const Layout: React.FC<Props> = props => {
   return (
     <App>
+      <OpenGraph path={props.path} />
       <Helmet>
         <meta
           name="viewport"
