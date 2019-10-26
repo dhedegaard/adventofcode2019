@@ -51,7 +51,9 @@ const Layout: React.FC = ({ children }) => {
         />
         <title>Advent of Code 2019</title>
         <link rel="icon" type="image/png" href="/favicon.png" />
-        <script type="module">{moduleScript}</script>
+        <script type="module" async>
+          {moduleScript}
+        </script>
       </Helmet>
       <CssBaseline />
       <header>
