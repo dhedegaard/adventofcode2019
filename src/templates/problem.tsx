@@ -130,7 +130,7 @@ const Problem: React.FC<Props> = props => {
               rel="noopener noreferrer"
               target="_blank"
               variant="contained"
-              color="secondary"
+              color="primary"
               component="a"
             >
               Advent of Code link
@@ -140,7 +140,7 @@ const Problem: React.FC<Props> = props => {
               rel="noopener noreferrer"
               target="_blank"
               variant="contained"
-              color="secondary"
+              color="primary"
               component="a"
             >
               See implementation
@@ -181,14 +181,14 @@ const Problem: React.FC<Props> = props => {
                 })
               }
               variant="contained"
-              color="secondary"
+              color="primary"
             >
               Load author's input
             </Button>
           </Center>
           <Center>
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               disabled={
                 state.input === "" ||
@@ -221,7 +221,7 @@ const Problem: React.FC<Props> = props => {
           </Center>
           <Center>
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               disabled={
                 state.input === "" ||

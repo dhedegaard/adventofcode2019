@@ -47,7 +47,6 @@ init().then(() => {
 const theme = createMuiTheme({
   palette: {
     primary: blueGrey,
-    secondary: pink,
   },
 })
 
