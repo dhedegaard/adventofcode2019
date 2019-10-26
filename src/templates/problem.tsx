@@ -167,11 +167,14 @@ const Problem: React.FC<Props> = props => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item sm={12} md>
-          <Typography variant="h6">Input:</Typography>
+          <Typography variant="h6" component="label" htmlFor="id_input">
+            Input:
+          </Typography>
           <Typography paragraph>
             Copy/paste your input into the text box below.
           </Typography>
           <InputTextField
+            id="id_input"
             variant="outlined"
             multiline
             disabled={aoc2019 == null || state.executing}
