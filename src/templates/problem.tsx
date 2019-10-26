@@ -1,7 +1,7 @@
 import React from "react"
 import Layout from "../components/Layout"
 import styled, { createGlobalStyle } from "styled-components"
-import { TextField, Button, Grid, Typography, Paper } from "@material-ui/core"
+import { TextField, Button, Grid, Typography, Box } from "@material-ui/core"
 import Helmet from "react-helmet"
 import useAoc2019 from "../hooks/useAoc2019"
 import { GatsbyPageProps } from "../@types/aoc2019"
@@ -13,7 +13,13 @@ body {
 `
 
 const SolvedGrid = styled(Grid)`
-  align-self: flex-end;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+`
+
+const InputTextField = styled(TextField)`
+  width: 100%;
 `
 
 const initialState = {
@@ -97,112 +103,112 @@ const Problem: React.FC<Props> = props => {
             </a>
             .
           </Typography>
-          {aoc2019 != null && aoc2019.input != null && (
-            <Button
-              onClick={() =>
-                dispatch({
-                  type: "CHANGE_INPUT",
-                  input: aoc2019.input!(),
-                })
-              }
-            >
-              Load puzzle input
-            </Button>
-          )}
         </>
       )}
-      <Paper>
-        <Grid container spacing={3}>
-          <Grid item xs>
-            <Typography variant="h6">Input:</Typography>
-            <TextField
-              variant="outlined"
-              multiline
-              rows={10}
-              value={state.input}
-              onChange={event =>
-                dispatch({
-                  type: "CHANGE_INPUT",
-                  input: event.currentTarget.value,
-                })
-              }
-            />
-          </Grid>
-          <SolvedGrid item xs>
-            <Button
-              color="primary"
-              variant="contained"
-              disabled={
-                state.input === "" ||
-                state.executing ||
-                aoc2019 == null ||
-                aoc2019.part1 == null
-              }
-              type="button"
-              onClick={async () => {
-                if (aoc2019 == null || aoc2019.part1 == null) {
-                  return
-                }
-
-                // Run the function.
-                const before = new Date()
-                // TODO: Handle rejected promises somehow.
-                const result = aoc2019.part1(state.input)
-                const after = new Date()
-
-                // Show the result.
-                dispatch({
-                  type: "SET_RESULT",
-                  duration: after.getTime() - before.getTime(),
-                  result: result,
-                })
-              }}
-            >
-              Part1
-            </Button>
-            <Button
-              color="primary"
-              variant="contained"
-              disabled={
-                state.input === "" ||
-                state.executing ||
-                aoc2019 == null ||
-                aoc2019.part2 == null
-              }
-              type="button"
-              onClick={async () => {
-                if (aoc2019 == null || aoc2019.part2 == null) {
-                  return
-                }
-
-                // Run the function.
-                const before = new Date()
-                // TODO: Handle rejected promises somehow.
-                const result = aoc2019.part2(state.input)
-                const after = new Date()
-
-                // Show the result.
-                dispatch({
-                  type: "SET_RESULT",
-                  duration: after.getTime() - before.getTime(),
-                  result: result,
-                })
-              }}
-            >
-              Part2
-            </Button>
-          </SolvedGrid>
-          <Grid item xs>
-            <Typography variant="h6">Result:</Typography>
-            {state.result !== "" && (
-              <>
-                <p>Result: {state.result}</p>
-                <p>Duration: {state.duration!.toLocaleString()} ms</p>
-              </>
-            )}
-          </Grid>
+      <Grid container spacing={3}>
+        <Grid item sm={12} md>
+          <Typography variant="h6">Input:</Typography>
+          <InputTextField
+            variant="outlined"
+            multiline
+            disabled={aoc2019 == null || state.executing}
+            rows={10}
+            value={state.input}
+            onChange={event =>
+              dispatch({
+                type: "CHANGE_INPUT",
+                input: event.currentTarget.value,
+              })
+            }
+          />
         </Grid>
-      </Paper>
+        <SolvedGrid item sm={12} md>
+          <Button
+            disabled={
+              aoc2019 == null || aoc2019.input == null || state.executing
+            }
+            onClick={() =>
+              dispatch({
+                type: "CHANGE_INPUT",
+                input: aoc2019!.input!(),
+              })
+            }
+          >
+            Load author's input
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            disabled={
+              state.input === "" ||
+              state.executing ||
+              aoc2019 == null ||
+              aoc2019.part1 == null
+            }
+            type="button"
+            onClick={async () => {
+              if (aoc2019 == null || aoc2019.part1 == null) {
+                return
+              }
+
+              // Run the function.
+              const before = new Date()
+              // TODO: Handle rejected promises somehow.
+              const result = aoc2019.part1(state.input)
+              const after = new Date()
+
+              // Show the result.
+              dispatch({
+                type: "SET_RESULT",
+                duration: after.getTime() - before.getTime(),
+                result: result,
+              })
+            }}
+          >
+            Run part 1
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            disabled={
+              state.input === "" ||
+              state.executing ||
+              aoc2019 == null ||
+              aoc2019.part2 == null
+            }
+            type="button"
+            onClick={async () => {
+              if (aoc2019 == null || aoc2019.part2 == null) {
+                return
+              }
+
+              // Run the function.
+              const before = new Date()
+              // TODO: Handle rejected promises somehow.
+              const result = aoc2019.part2(state.input)
+              const after = new Date()
+
+              // Show the result.
+              dispatch({
+                type: "SET_RESULT",
+                duration: after.getTime() - before.getTime(),
+                result: result,
+              })
+            }}
+          >
+            Run part 2
+          </Button>
+        </SolvedGrid>
+        <Grid item sm={12} md>
+          <Typography variant="h6">Result:</Typography>
+          {state.result !== "" && (
+            <>
+              <p>Result: {state.result}</p>
+              <p>Duration: {state.duration!.toLocaleString()} ms</p>
+            </>
+          )}
+        </Grid>
+      </Grid>
     </Layout>
   )
 }

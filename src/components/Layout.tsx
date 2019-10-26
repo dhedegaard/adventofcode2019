@@ -37,6 +37,15 @@ init().then(() => {
 });
 `.replace(/(\n|\s\s)/g, "")
 
+const ModuleScript = React.memo(
+  () => (
+    <script type="module" async>
+      {moduleScript}
+    </script>
+  ),
+  () => true
+)
+
 type Props = {
   path: string
   children: React.ReactNode
@@ -45,6 +54,7 @@ type Props = {
 const Layout: React.FC<Props> = props => {
   return (
     <>
+      <ModuleScript />
       <Helmet>
         <meta
           name="viewport"
@@ -52,9 +62,6 @@ const Layout: React.FC<Props> = props => {
         />
         <title>Advent of Code 2019</title>
         <link rel="icon" type="image/png" href="/favicon.png" />
-        <script type="module" async>
-          {moduleScript}
-        </script>
       </Helmet>
       <CssBaseline />
       <header>
@@ -66,12 +73,12 @@ const Layout: React.FC<Props> = props => {
       </header>
       <main>
         <OuterGrid container spacing={3}>
-          <Grid item md={2}>
+          <Grid item md={2} sm={4} xs={6}>
             <Paper square>
               <NavMenu path={props.path} />
             </Paper>
           </Grid>
-          <ContentGrid item md>
+          <ContentGrid item md={10} sm={8} xs={6}>
             <ContentPaper>{props.children}</ContentPaper>
           </ContentGrid>
         </OuterGrid>
