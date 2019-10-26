@@ -54,7 +54,20 @@ const TitleLink = styled(Button)`
   overflow: hidden;
   white-space: nowrap;
   max-width: 100%;
+
+  @media (max-width: 425px) {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    font-size: 12px;
+    text-align: center;
+  }
 ` as typeof Button & { rel?: string }
+
+const ProblemButton = styled(Button)`
+  margin: 8px auto;
+  white-space: nowrap;
+`
 
 const initialState = {
   input: "",
@@ -174,7 +187,7 @@ const Problem: React.FC<Props> = props => {
         </Grid>
         <SolvedGrid item sm={12} md>
           <Center>
-            <Button
+            <ProblemButton
               disabled={
                 aoc2019 == null || aoc2019.input == null || state.executing
               }
@@ -188,10 +201,10 @@ const Problem: React.FC<Props> = props => {
               color="primary"
             >
               Load author's input
-            </Button>
+            </ProblemButton>
           </Center>
           <Center>
-            <Button
+            <ProblemButton
               color="primary"
               variant="contained"
               disabled={
@@ -221,10 +234,10 @@ const Problem: React.FC<Props> = props => {
               }}
             >
               Run part 1
-            </Button>
+            </ProblemButton>
           </Center>
           <Center>
-            <Button
+            <ProblemButton
               color="primary"
               variant="contained"
               disabled={
@@ -254,7 +267,7 @@ const Problem: React.FC<Props> = props => {
               }}
             >
               Run part 2
-            </Button>
+            </ProblemButton>
           </Center>
         </SolvedGrid>
         <Grid item sm={12} md>
