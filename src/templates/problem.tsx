@@ -76,6 +76,7 @@ const initialState = {
   executing: false,
 }
 
+const InputLabel = Typography as typeof Typography & any
 type State = typeof initialState
 
 type Actions =
@@ -167,9 +168,9 @@ const Problem: React.FC<Props> = props => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item sm={12} md>
-          <Typography variant="h6" component="label" htmlFor="id_input">
+          <InputLabel variant="h6" component="label" htmlFor="id_input">
             Input:
-          </Typography>
+          </InputLabel>
           <Typography paragraph>
             Copy/paste your input into the text box below.
           </Typography>

@@ -13,7 +13,7 @@ import {
 import NavMenu from "./NavMenu"
 import styled, { createGlobalStyle } from "styled-components"
 import { ThemeProvider } from "@material-ui/styles"
-import { blueGrey, red, teal } from "@material-ui/core/colors"
+import { blueGrey } from "@material-ui/core/colors"
 import OpenGraph from "./OpenGraph"
 import useSiteMetadata from "../hooks/useSiteMetadata"
 
