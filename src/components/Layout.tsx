@@ -104,11 +104,11 @@ const Layout: React.FC<Props> = props => {
         </AppBar>
       </header>
       <main>
-        <OuterGrid container spacing={3}>
-          <Grid item md={2} sm={4} xs={4}>
+        <OuterGrid container spacing={1}>
+          <Grid item md={2} sm={3} xs={3}>
             <NavMenu path={props.path} />
           </Grid>
-          <ContentGrid item md={10} sm={8} xs={8}>
+          <ContentGrid item md={10} sm={9} xs={9}>
             <ContentPaper>{props.children}</ContentPaper>
           </ContentGrid>
         </OuterGrid>

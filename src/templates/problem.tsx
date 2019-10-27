@@ -55,11 +55,11 @@ const TitleLink = styled(Button)`
   white-space: nowrap;
   max-width: 100%;
 
-  @media (max-width: 425px) {
+  @media (max-width: 599px) {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    font-size: 12px;
+    font-size: 10px;
     text-align: center;
   }
 ` as typeof Button & { rel?: string }
@@ -67,6 +67,10 @@ const TitleLink = styled(Button)`
 const ProblemButton = styled(Button)`
   margin: 8px auto;
   white-space: nowrap;
+
+  @media (max-width: 599px) {
+    font-size: 10px;
+  }
 `
 
 const initialState = {
@@ -166,7 +170,7 @@ const Problem: React.FC<Props> = props => {
           </Grid>
         )}
       </Grid>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         <Grid item sm={12} md>
           <InputLabel variant="h6" component="label" htmlFor="id_input">
             Input:
