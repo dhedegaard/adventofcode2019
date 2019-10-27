@@ -56,7 +56,22 @@ module.exports = {
         icon: `static/favicon.png`,
       },
     },
-    `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        workboxConfig: {
+          importWorkboxFrom: `cdn`,
+          runtimeCaching: [
+            {
+              urlPattern: /.*/,
+              handler: `NetworkFirst`,
+            },
+          ],
+          skipWaiting: true,
+          clientsClaim: true,
+        },
+      },
+    },
   ],
 }
 
