@@ -1,8 +1,8 @@
 import React from "react"
 import { List, ListItem, ListItemText, Paper } from "@material-ui/core"
 import { Link } from "gatsby"
-import { getDays } from "../mapper-utils"
 import styled from "styled-components"
+import useProblems from "../hooks/useProblems"
 
 const ContainerPaper = styled(Paper)`
   height: 100%;
@@ -13,6 +13,7 @@ type Props = {
 }
 
 const NavMenu: React.FC<Props> = ({ path }) => {
+  const problems = useProblems()
   return (
     <ContainerPaper square>
       <List component="nav">
@@ -25,7 +26,7 @@ const NavMenu: React.FC<Props> = ({ path }) => {
         >
           <ListItemText>Index</ListItemText>
         </ListItem>
-        {getDays().map(problem => (
+        {problems.map(problem => (
           <ListItem
             button
             key={problem}
