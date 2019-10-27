@@ -1,14 +1,7 @@
 import React from "react"
 import Layout from "../components/Layout"
 import styled, { createGlobalStyle } from "styled-components"
-import {
-  TextField,
-  Button,
-  Grid,
-  Typography,
-  Paper,
-  Link,
-} from "@material-ui/core"
+import { TextField, Button, Grid, Typography, Paper } from "@material-ui/core"
 import Helmet from "react-helmet"
 import useAoc2019 from "../hooks/useAoc2019"
 import { GatsbyPageProps } from "../@types/aoc2019"
@@ -29,6 +22,7 @@ const InputTextField = styled(TextField)`
   width: 100%;
 
   & textarea {
+    font-size: 10px;
     font-family: "Courier New", Courier, monospace;
   }
 `
@@ -183,7 +177,7 @@ const Problem: React.FC<Props> = props => {
             variant="outlined"
             multiline
             disabled={aoc2019 == null || state.executing}
-            rows={10}
+            rows={16}
             value={state.input}
             onChange={event =>
               dispatch({
