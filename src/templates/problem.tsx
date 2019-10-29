@@ -222,15 +222,15 @@ const Problem: React.FC<Props> = props => {
                 }
 
                 // Run the function.
-                const before = new Date()
+                const before = performance.now()
                 // TODO: Handle rejected promises somehow.
                 const result = aoc2019.part1(state.input)
-                const after = new Date()
+                const after = performance.now()
 
                 // Show the result.
                 dispatch({
                   type: "SET_RESULT",
-                  duration: after.getTime() - before.getTime(),
+                  duration: after - before,
                   result: result,
                 })
               }}
@@ -255,15 +255,15 @@ const Problem: React.FC<Props> = props => {
                 }
 
                 // Run the function.
-                const before = new Date()
+                const before = performance.now()
                 // TODO: Handle rejected promises somehow.
                 const result = aoc2019.part2(state.input)
-                const after = new Date()
+                const after = performance.now()
 
                 // Show the result.
                 dispatch({
                   type: "SET_RESULT",
-                  duration: after.getTime() - before.getTime(),
+                  duration: after - before,
                   result: result,
                 })
               }}
