@@ -25,14 +25,22 @@ const IndexPage: React.FC<GatsbyPageProps> = props => (
       </Link>
     </Typography>
 
-    <Typography paragraph>
-      The basic idea is:
-      <ul>
-        <li>Implement the solution in Rust with unit tests like last year.</li>
-        <li>Build the rust code into web assembly.</li>
-        <li>Run the solutions through the browser, using this site.</li>
-      </ul>
-    </Typography>
+    <Typography paragraph>The basic idea is:</Typography>
+    <ul>
+      <li>
+        <Typography>
+          Implement the solution in Rust with unit tests like last year.
+        </Typography>
+      </li>
+      <li>
+        <Typography>Build the rust code into web assembly.</Typography>
+      </li>
+      <li>
+        <Typography>
+          Run the solutions through the browser, using this site.
+        </Typography>
+      </li>
+    </ul>
   </Layout>
 )
 
