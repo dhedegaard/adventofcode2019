@@ -281,7 +281,12 @@ const Problem: React.FC<Props> = props => {
             <ResultBox square>
               <Typography paragraph>Result: {state.result}</Typography>
               <Typography paragraph>
-                Duration: {state.duration!.toLocaleString()} ms
+                Duration:{" "}
+                {(state.duration! / 1000).toLocaleString(undefined, {
+                  minimumFractionDigits: 6,
+                  maximumFractionDigits: 6,
+                })}{" "}
+                seconds
               </Typography>
             </ResultBox>
           )}
