@@ -93,7 +93,9 @@ const Layout: React.FC<Props> = props => {
         <meta name="description" content={description} />
         <title>Advent of Code 2019</title>
         <link rel="icon" type="image/png" href="/favicon.png" />
-        <script type="module">{moduleScript}</script>
+        <script type="module" defer>
+          {moduleScript}
+        </script>
       </Helmet>
       <header>
         <AppBar position="static" color="primary">

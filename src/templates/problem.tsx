@@ -1,7 +1,15 @@
 import React from "react"
 import Layout from "../components/Layout"
 import styled, { createGlobalStyle } from "styled-components"
-import { TextField, Button, Grid, Typography, Paper } from "@material-ui/core"
+import {
+  TextField,
+  Button,
+  Grid,
+  Typography,
+  Paper,
+  Snackbar,
+  Link,
+} from "@material-ui/core"
 import Helmet from "react-helmet"
 import useAoc2019 from "../hooks/useAoc2019"
 import { GatsbyPageProps } from "../@types/aoc2019"
@@ -99,6 +107,7 @@ const Problem: React.FC<Props> = props => {
   const problem = props.pageContext.day
 
   const aoc2019 = useAoc2019(problem)
+  const [errorLoadingWASM, setErrorLoadingWASM] = React.useState(false)
 
   const [state, dispatch] = React.useReducer<React.Reducer<State, Actions>>(
     (state, action) => {
@@ -126,6 +135,14 @@ const Problem: React.FC<Props> = props => {
     },
     initialState
   )
+
+  React.useEffect(() => {
+    console.log("effect aoc:", aoc2019)
+    if (aoc2019 == null) {
+      const handle = setTimeout(() => setErrorLoadingWASM(true), 2000)
+      return () => clearTimeout(handle)
+    }
+  }, [aoc2019])
 
   return (
     <Layout path={props.path}>
@@ -164,6 +181,26 @@ const Problem: React.FC<Props> = props => {
           </Grid>
         )}
       </Grid>
+      <Snackbar
+        open={errorLoadingWASM}
+        message={
+          <>
+            Error loading WASM, make sure you use a proper browser.{" "}
+            <Link
+              href="#"
+              onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+                event.preventDefault()
+                window.location.reload(true)
+                return false
+              }}
+              color="error"
+            >
+              Try hard-reloading.
+            </Link>
+          </>
+        }
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      />
       <Grid container spacing={2}>
         <Grid item sm={12} md>
           <InputLabel variant="h6" component="label" htmlFor="id_input">
