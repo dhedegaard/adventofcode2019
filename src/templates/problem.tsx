@@ -137,7 +137,6 @@ const Problem: React.FC<Props> = props => {
   )
 
   React.useEffect(() => {
-    console.log("effect aoc:", aoc2019)
     if (aoc2019 == null) {
       const handle = setTimeout(() => setErrorLoadingWASM(true), 2000)
       return () => clearTimeout(handle)
