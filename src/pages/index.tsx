@@ -11,7 +11,8 @@ const IndexPage: React.FC<GatsbyPageProps> = props => (
     </Typography>
 
     <Typography paragraph>
-      This years Advent of Code, implemented in the browser, using typescript.
+      This years Advent of Code, implemented in the browser, using typescript
+      and rust.
     </Typography>
 
     <Typography paragraph>
