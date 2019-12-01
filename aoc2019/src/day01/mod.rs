@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 pub fn raw_input() -> String {
   include_str!("input.txt").to_string()
 }
@@ -12,19 +10,22 @@ pub fn parse_input(input: &str) -> Vec<i32> {
 }
 
 pub fn part1(input: &[i32]) -> i32 {
-  input.iter().sum()
+  input.iter().map(|e| *e / 3 - 2).sum()
 }
 
 pub fn part2(input: &[i32]) -> i32 {
-  let mut result = 0;
-  let mut seen_numbers = HashSet::with_capacity(133_000);
-  for elem in input.iter().cycle() {
-    if !seen_numbers.insert(result) {
-      return result;
-    }
-    result += elem;
-  }
-  unreachable!()
+  input
+    .iter()
+    .map(|e| {
+      let mut total = 0;
+      let mut fuel = e / 3 - 2;
+      while fuel > 0 {
+        total += fuel;
+        fuel = fuel / 3 - 2;
+      }
+      total
+    })
+    .sum()
 }
 
 #[cfg(test)]
@@ -32,36 +33,27 @@ mod tests {
   use super::*;
 
   #[test]
-  fn test_parse_input() {
-    assert_eq!(parse_input("+1, +1, +1"), vec![1, 1, 1]);
-    assert_eq!(parse_input("+1, +1, -2"), vec![1, 1, -2]);
-    assert_eq!(parse_input("-1, -2, -3"), vec![-1, -2, -3]);
-  }
-
-  #[test]
   fn examples_part1() {
-    assert_eq!(part1(&parse_input("+1, -2, +3, +1")), 3);
-    assert_eq!(part1(&parse_input("+1, +1, +1")), 3);
-    assert_eq!(part1(&parse_input("+1, +1, -2")), 0);
-    assert_eq!(part1(&parse_input("-1, -2, -3")), -6);
+    assert_eq!(part1(&[12]), 2);
+    assert_eq!(part1(&[14]), 2);
+    assert_eq!(part1(&[1969]), 654);
+    assert_eq!(part1(&[100756]), 33583);
   }
 
   #[test]
   fn result_part1() {
-    assert_eq!(part1(&parse_input(&raw_input())), 516);
+    assert_eq!(part1(&parse_input(&raw_input())), 3412094);
   }
 
   #[test]
   fn examples_part2() {
-    assert_eq!(part2(&parse_input("+1, -2, +3, +1")), 2);
-    assert_eq!(part2(&parse_input("+1, -1")), 0);
-    assert_eq!(part2(&parse_input("+3, +3, +4, -2, -4")), 10);
-    assert_eq!(part2(&parse_input("-6, +3, +8, +5, -6")), 5);
-    assert_eq!(part2(&parse_input("+7, +7, -2, -7, -4")), 14);
+    assert_eq!(part2(&[14]), 2);
+    assert_eq!(part2(&[1969]), 966);
+    assert_eq!(part2(&[100756]), 50346);
   }
 
   #[test]
   fn result_part2() {
-    assert_eq!(part2(&parse_input(&raw_input())), 71892);
+    assert_eq!(part2(&parse_input(&raw_input())), 5115267);
   }
 }
