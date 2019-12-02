@@ -3,6 +3,7 @@ extern crate wasm_bindgen;
 use wasm_bindgen::prelude::*;
 
 mod day01;
+mod day02;
 mod day18;
 
 #[wasm_bindgen]
