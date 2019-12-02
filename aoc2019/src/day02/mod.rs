@@ -10,7 +10,7 @@ pub fn parse_input(input: &str) -> Vec<i32> {
 }
 
 pub fn intcode(input: &[i32]) -> Vec<i32> {
-  let mut insts = input.into_iter().map(|e| *e).collect::<Vec<_>>();
+  let mut insts = input.to_vec();
   let mut pc = 0;
   loop {
     match insts[pc] {
@@ -34,7 +34,7 @@ pub fn intcode(input: &[i32]) -> Vec<i32> {
 }
 
 pub fn part1(input: &[i32]) -> i32 {
-  let mut insts = input.into_iter().map(|e| *e).collect::<Vec<_>>();
+  let mut insts = input.to_vec();
   insts[1] = 12;
   insts[2] = 2;
   intcode(&insts)[0]
