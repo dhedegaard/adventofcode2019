@@ -1,10 +1,5 @@
 use std::collections::hash_set::HashSet;
-
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub struct Point {
-  x: i32,
-  y: i32,
-}
+use std::iter::FromIterator;
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 enum Direction {
@@ -38,7 +33,7 @@ fn parse_instruction(instruction: &str) -> Instruction {
     'D' => Direction::D,
     'L' => Direction::L,
     'R' => Direction::R,
-    _ => unreachable!(),
+    char => panic!("Unknown instruction: {}", char),
   };
   let distance = instruction.chars().skip(1).collect::<String>();
   return Instruction {
@@ -47,29 +42,40 @@ fn parse_instruction(instruction: &str) -> Instruction {
   };
 }
 
-fn wire_to_positions(wire: &[Instruction]) -> HashSet<Point> {
-  let mut result: HashSet<Point> = HashSet::new();
-  let mut cur_pos = Point { x: 0, y: 0 };
-  for inst in wire {
-    for _ in 0..inst.distance {
-      match inst.direction {
-        Direction::U => {
-          cur_pos.y -= 1;
-        }
-        Direction::D => {
-          cur_pos.y += 1;
-        }
-        Direction::L => {
-          cur_pos.x -= 1;
-        }
-        Direction::R => {
-          cur_pos.x += 1;
-        }
-      };
-      result.insert(cur_pos);
-    }
-  }
-  result
+fn wire_to_positions(wire: &[Instruction]) -> Vec<(i32, i32)> {
+  let mut cur_pos = (0, 0);
+  wire
+    .iter()
+    .map(|inst| {
+      let mut res = vec![];
+      for _ in 0..inst.distance {
+        match inst.direction {
+          Direction::U => {
+            cur_pos = (cur_pos.0, cur_pos.1 + 1);
+          }
+          Direction::D => {
+            cur_pos = (cur_pos.0, cur_pos.1 - 1);
+          }
+          Direction::L => {
+            cur_pos = (cur_pos.0 - 1, cur_pos.1);
+          }
+          Direction::R => {
+            cur_pos = (cur_pos.0 + 1, cur_pos.1);
+          }
+          _ => unreachable!(),
+        };
+        res.push(cur_pos);
+      }
+      res
+    })
+    .flatten()
+    .collect()
+}
+
+fn find_intersections(wire1: &[(i32, i32)], wire2: &[(i32, i32)]) -> Vec<(i32, i32)> {
+  let set1: HashSet<(i32, i32)> = HashSet::from_iter(wire1.into_iter().cloned());
+  let set2: HashSet<(i32, i32)> = HashSet::from_iter(wire2.into_iter().cloned());
+  set1.intersection(&set2).cloned().collect()
 }
 
 pub fn part1(wires: &[Vec<String>]) -> i32 {
@@ -85,8 +91,37 @@ pub fn part1(wires: &[Vec<String>]) -> i32 {
       .map(|e| parse_instruction(e))
       .collect::<Vec<_>>(),
   );
-  let intersections = wire1_positions.intersection(&wire2_positions);
-  intersections.map(|e| e.x.abs() + e.y.abs()).min().unwrap()
+  let intersections = find_intersections(&wire1_positions, &wire2_positions);
+  intersections
+    .iter()
+    .map(|e| e.0.abs() + e.1.abs())
+    .min()
+    .unwrap()
+}
+
+pub fn part2(wires: &[Vec<String>]) -> i32 {
+  let wire1_positions = wire_to_positions(
+    &wires[0]
+      .iter()
+      .map(|e| parse_instruction(e))
+      .collect::<Vec<_>>(),
+  );
+  let wire2_positions = wire_to_positions(
+    &wires[1]
+      .iter()
+      .map(|e| parse_instruction(e))
+      .collect::<Vec<_>>(),
+  );
+  let intersections = find_intersections(&wire1_positions, &wire2_positions);
+  intersections
+    .iter()
+    .map(|pos| {
+      wire1_positions.iter().position(|x| x == pos).unwrap()
+        + wire2_positions.iter().position(|x| x == pos).unwrap()
+        + 2 // offset the index of 0
+    })
+    .min()
+    .unwrap() as i32
 }
 
 #[cfg(test)]
@@ -103,5 +138,17 @@ mod tests {
   #[test]
   fn result_part1() {
     assert_eq!(part1(&parse_input(&raw_input())), 2050);
+  }
+
+  #[test]
+  fn test_part2() {
+    assert_eq!(part2(&parse_input(include_str!("test1.txt"))), 30);
+    assert_eq!(part2(&parse_input(include_str!("test2.txt"))), 610);
+    assert_eq!(part2(&parse_input(include_str!("test3.txt"))), 410);
+  }
+
+  #[test]
+  fn result_part2() {
+    assert_eq!(part2(&parse_input(&raw_input())), 21666);
   }
 }
