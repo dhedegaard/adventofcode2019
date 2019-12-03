@@ -62,7 +62,6 @@ fn wire_to_positions(wire: &[Instruction]) -> Vec<(i32, i32)> {
           Direction::R => {
             cur_pos = (cur_pos.0 + 1, cur_pos.1);
           }
-          _ => unreachable!(),
         };
         res.push(cur_pos);
       }
