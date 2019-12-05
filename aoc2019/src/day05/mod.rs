@@ -5,27 +5,11 @@ pub fn raw_input() -> String {
   include_str!("input.txt").to_string()
 }
 
-// pub fn part1(input: &str) -> usize {
-//   let (from, to) = parse_input(input);
-//   let mut valid_passwords = 0;
-//   for val in from.parse::<i32>().unwrap()..to.parse::<i32>().unwrap() {
-//     if is_valid_password(&val.to_string()) {
-//       valid_passwords += 1;
-//     }
-//   }
-//   valid_passwords
-// }
-
-// pub fn part2(input: &str) -> usize {
-//   let (from, to) = parse_input(input);
-//   let mut valid_passwords = 0;
-//   for val in from.parse::<i32>().unwrap()..to.parse::<i32>().unwrap() {
-//     if is_valid_password2(&val.to_string()) {
-//       valid_passwords += 1;
-//     }
-//   }
-//   valid_passwords
-// }
+pub fn part1(input: &str) -> i32 {
+  let mut outputs = vec![];
+  day02::intcode(&day02::parse_input(input), &[1], &mut outputs);
+  *outputs.last().unwrap()
+}
 
 #[cfg(test)]
 mod tests {
