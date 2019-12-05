@@ -9,8 +9,9 @@ pub fn parse_input(input: &str) -> Vec<i32> {
     .collect()
 }
 
-pub fn intcode(input: &[i32]) -> Vec<i32> {
-  let mut insts = input.to_vec();
+pub fn intcode(insts_slice: &[i32], input_slice: &[i32], outputs: &mut Vec<i32>) -> Vec<i32> {
+  let mut insts = insts_slice.to_vec();
+  let mut inputs = input_slice.to_vec();
   let mut pc = 0;
   loop {
     match insts[pc] {
@@ -26,6 +27,17 @@ pub fn intcode(input: &[i32]) -> Vec<i32> {
         insts[res] = insts[insts[pc + 1] as usize] * insts[insts[pc + 2] as usize];
         pc += 4;
       }
+      3 => {
+        // Input
+        let res = insts[pc + 1] as usize;
+        insts[res] = inputs.remove(0);
+        pc += 2;
+      }
+      4 => {
+        // Output
+        outputs.push(insts[insts[pc + 1] as usize]);
+        pc += 2;
+      }
       // Halt
       99 => return insts,
       _ => panic!("Unknown instruction: {}", insts[pc]),
@@ -37,7 +49,7 @@ pub fn part1(input: &[i32]) -> i32 {
   let mut insts = input.to_vec();
   insts[1] = 12;
   insts[2] = 2;
-  intcode(&insts)[0]
+  intcode(&insts, &[], &mut vec![])[0]
 }
 
 pub fn part2(input: &[i32]) -> i32 {
@@ -46,7 +58,7 @@ pub fn part2(input: &[i32]) -> i32 {
       let mut insts = input.to_vec();
       insts[1] = noun;
       insts[2] = verb;
-      if intcode(&insts)[0] == 19690720 {
+      if intcode(&insts, &[], &mut vec![])[0] == 19690720 {
         return 100 * noun + verb;
       }
     }
@@ -60,11 +72,20 @@ mod tests {
 
   #[test]
   fn examples_intcode() {
-    assert_eq!(intcode(&[1, 0, 0, 0, 99]), &[2, 0, 0, 0, 99]);
-    assert_eq!(intcode(&[2, 3, 0, 3, 99]), &[2, 3, 0, 6, 99]);
-    assert_eq!(intcode(&[2, 4, 4, 5, 99, 0]), &[2, 4, 4, 5, 99, 9801]);
     assert_eq!(
-      intcode(&[1, 1, 1, 4, 99, 5, 6, 0, 99]),
+      intcode(&[1, 0, 0, 0, 99], &[], &mut vec![]),
+      &[2, 0, 0, 0, 99]
+    );
+    assert_eq!(
+      intcode(&[2, 3, 0, 3, 99], &[], &mut vec![]),
+      &[2, 3, 0, 6, 99]
+    );
+    assert_eq!(
+      intcode(&[2, 4, 4, 5, 99, 0], &[], &mut vec![]),
+      &[2, 4, 4, 5, 99, 9801]
+    );
+    assert_eq!(
+      intcode(&[1, 1, 1, 4, 99, 5, 6, 0, 99], &[], &mut vec![]),
       &[30, 1, 1, 4, 2, 5, 6, 0, 99]
     );
   }
