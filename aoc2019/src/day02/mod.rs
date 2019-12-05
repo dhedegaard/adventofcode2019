@@ -12,7 +12,7 @@ pub fn parse_input(input: &str) -> Vec<i32> {
 fn get_registry(insts: &mut Vec<i32>, operation: i32, pc: usize, param: usize, addr: bool) -> i32 {
   let val = insts[pc + param];
   let mask = (operation as u32) / (10_u32.pow(param as u32 + 1)) % 10;
-  assert!(!addr || mask == 0, "addr mode set but mask is 1");
+  assert!(!addr || mask == 0);
   if !addr && mask == 0 {
     insts[val as usize]
   } else {
@@ -56,9 +56,34 @@ pub fn intcode(insts_slice: &[i32], input_slice: &[i32], outputs: &mut Vec<i32>)
         outputs.push(res);
         pc += 2;
       }
+      6 => {
+        // jump-if-false
+        let res = get_registry(&mut insts, operation, pc, 1, false);
+        if res == 0 {
+          pc = get_registry(&mut insts, operation, pc, 2, false) as usize;
+        } else {
+          pc += 3;
+        }
+      }
+      7 => {
+        // less-than
+        let a = get_registry(&mut insts, operation, pc, 1, false);
+        let b = get_registry(&mut insts, operation, pc, 2, false);
+        let res = get_registry(&mut insts, operation, pc, 3, true) as usize;
+        insts[res] = if a < b { 1 } else { 0 };
+        pc += 4;
+      }
+      8 => {
+        // equals
+        let a = get_registry(&mut insts, operation, pc, 1, false);
+        let b = get_registry(&mut insts, operation, pc, 2, false);
+        let res = get_registry(&mut insts, operation, pc, 3, true) as usize;
+        insts[res] = if a == b { 1 } else { 0 };
+        pc += 4;
+      }
       // Halt
       99 => return insts,
-      _ => panic!("Unknown instruction: {}", insts[pc]),
+      _ => panic!("Unknown opcode: {}", opcode),
     }
   }
 }
