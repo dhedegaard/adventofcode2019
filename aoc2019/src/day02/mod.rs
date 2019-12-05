@@ -56,6 +56,15 @@ pub fn intcode(insts_slice: &[i32], input_slice: &[i32], outputs: &mut Vec<i32>)
         outputs.push(res);
         pc += 2;
       }
+      5 => {
+        // jump-if-true
+        let res = get_registry(&mut insts, operation, pc, 1, false);
+        if res != 0 {
+          pc = get_registry(&mut insts, operation, pc, 2, false) as usize;
+        } else {
+          pc += 3;
+        }
+      }
       6 => {
         // jump-if-false
         let res = get_registry(&mut insts, operation, pc, 1, false);
