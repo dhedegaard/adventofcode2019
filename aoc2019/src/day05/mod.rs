@@ -11,6 +11,12 @@ pub fn part1(input: &str) -> i32 {
   *outputs.last().unwrap()
 }
 
+pub fn part2(input: &str) -> i32 {
+  let mut outputs = vec![];
+  day02::intcode(&day02::parse_input(input), &[5], &mut outputs);
+  *outputs.last().unwrap()
+}
+
 #[cfg(test)]
 mod tests {
   use super::*;
@@ -30,7 +36,14 @@ mod tests {
   fn result_part1() {
     let mut outputs = vec![];
     day02::intcode(&day02::parse_input(&raw_input()), &[1], &mut outputs);
-    assert_eq!(outputs[outputs.len() - 1], 15314507);
+    assert_eq!(*outputs.last().unwrap(), 15314507);
+  }
+
+  #[test]
+  fn result_part2() {
+    let mut outputs = vec![];
+    day02::intcode(&day02::parse_input(&raw_input()), &[5], &mut outputs);
+    assert_eq!(*outputs.last().unwrap(), 652726);
   }
 
   #[test]
