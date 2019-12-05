@@ -41,29 +41,12 @@ mod tests {
     // Input -> output.
     assert_eq!(outputs, &[1337]);
   }
-  // #[test]
-  // fn test_is_valid_password() {
-  //   assert_eq!(is_valid_password("111111"), true);
-  //   assert_eq!(is_valid_password("223450"), false);
-  //   assert_eq!(is_valid_password("123789"), false);
-  // }
 
   // #[test]
   // fn result_part1() {
-  //   assert_eq!(part1(&raw_input()), 1864);
-  // }
-
-  // #[test]
-  // fn test_is_valid_password2() {
-  //   assert_eq!(is_valid_password2("111111"), false);
-  //   assert_eq!(is_valid_password2("112233"), true);
-  //   assert_eq!(is_valid_password2("123444"), false);
-  //   assert_eq!(is_valid_password2("111122"), true);
-  //   assert_eq!(is_valid_password2("123445"), true);
-  // }
-
-  // #[test]
-  // fn result_part2() {
-  //   assert_eq!(part2(&raw_input()), 1258);
+  //   let mut outputs = vec![];
+  //   day02::intcode(&day02::parse_input(&raw_input()), &[1], &mut outputs);
+  //   println!("OUT: {:?}", outputs);
+  //   assert_eq!(false, true);
   // }
 }

@@ -9,33 +9,51 @@ pub fn parse_input(input: &str) -> Vec<i32> {
     .collect()
 }
 
+fn get_registry(insts: &mut Vec<i32>, operation: i32, pc: usize, param: usize, addr: bool) -> i32 {
+  let val = insts[pc + param];
+  let mask = (operation as u32) / (10_u32.pow(param as u32 + 1)) % 10;
+  assert!(!addr || mask == 0, "addr mode set but mask is 1");
+  if !addr && mask == 0 {
+    insts[val as usize]
+  } else {
+    val
+  }
+}
+
 pub fn intcode(insts_slice: &[i32], input_slice: &[i32], outputs: &mut Vec<i32>) -> Vec<i32> {
   let mut insts = insts_slice.to_vec();
   let mut inputs = input_slice.to_vec();
   let mut pc = 0;
   loop {
-    match insts[pc] {
+    let operation = insts[pc];
+    let opcode = operation % 100;
+    match opcode {
       1 => {
         // Addition
-        let res = insts[pc + 3] as usize;
-        insts[res] = insts[insts[pc + 1] as usize] + insts[insts[pc + 2] as usize];
+        let a = get_registry(&mut insts, operation, pc, 1, false);
+        let b = get_registry(&mut insts, operation, pc, 2, false);
+        let res = get_registry(&mut insts, operation, pc, 3, true) as usize;
+        insts[res] = a + b;
         pc += 4;
       }
       2 => {
         // Multiplication
-        let res = insts[pc + 3] as usize;
-        insts[res] = insts[insts[pc + 1] as usize] * insts[insts[pc + 2] as usize];
+        let a = get_registry(&mut insts, operation, pc, 1, false);
+        let b = get_registry(&mut insts, operation, pc, 2, false);
+        let res = get_registry(&mut insts, operation, pc, 3, true) as usize;
+        insts[res] = a * b;
         pc += 4;
       }
       3 => {
         // Input
-        let res = insts[pc + 1] as usize;
+        let res = get_registry(&mut insts, operation, pc, 1, true) as usize;
         insts[res] = inputs.remove(0);
         pc += 2;
       }
       4 => {
         // Output
-        outputs.push(insts[insts[pc + 1] as usize]);
+        let res = get_registry(&mut insts, operation, pc, 1, false);
+        outputs.push(res);
         pc += 2;
       }
       // Halt
