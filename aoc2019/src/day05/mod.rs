@@ -42,11 +42,10 @@ mod tests {
     assert_eq!(outputs, &[1337]);
   }
 
-  // #[test]
-  // fn result_part1() {
-  //   let mut outputs = vec![];
-  //   day02::intcode(&day02::parse_input(&raw_input()), &[1], &mut outputs);
-  //   println!("OUT: {:?}", outputs);
-  //   assert_eq!(false, true);
-  // }
+  #[test]
+  fn result_part1() {
+    let mut outputs = vec![];
+    day02::intcode(&day02::parse_input(&raw_input()), &[1], &mut outputs);
+    assert_eq!(outputs[outputs.len() - 1], 15314507);
+  }
 }
