@@ -158,7 +158,10 @@ const Problem: React.FC<Props> = props => {
         {problem != null && (
           <Grid item xs={12} md="auto">
             <TitleLink
-              href={`https://adventofcode.com/2019/day/${problem.slice(3)}`}
+              href={`https://adventofcode.com/2019/day/${parseInt(
+                problem.slice(3),
+                10
+              )}`}
               rel="noopener noreferrer"
               target="_blank"
               variant="contained"

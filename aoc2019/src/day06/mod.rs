@@ -52,7 +52,7 @@ fn parse_input2(input: &str) -> HashMap<String, Vec<String>> {
 }
 
 fn count_transfers(from: &str, to: &str, orbits: &HashMap<String, Vec<String>>) -> usize {
-  let mut queue: Vec<String> = vec![from.to_string()];
+  let mut queue = vec![from.to_string()];
   // planet -> depth.
   let mut seen: HashMap<String, usize> = HashMap::new();
   seen.insert(from.to_string(), 0);
