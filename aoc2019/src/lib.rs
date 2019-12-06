@@ -73,3 +73,16 @@ pub fn day05_part1(input: &str) -> String {
 pub fn day05_part2(input: &str) -> String {
   day05::part2(input).to_string()
 }
+
+#[wasm_bindgen]
+pub fn day06_input() -> String {
+  day06::raw_input()
+}
+#[wasm_bindgen]
+pub fn day06_part1(input: &str) -> String {
+  day06::part1(input).to_string()
+}
+#[wasm_bindgen]
+pub fn day06_part2(input: &str) -> String {
+  day06::part2(input).to_string()
+}
