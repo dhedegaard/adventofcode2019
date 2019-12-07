@@ -51,7 +51,7 @@ html, body, body > div, body > div > div, main {
  * <https://rustwasm.github.io/docs/wasm-bindgen/examples/without-a-bundler.html>
  */
 const moduleScript = `
-import init, * as aoc2019 from '/aoc2019/aoc2019.js?${Math.random()}';
+import init, * as aoc2019 from '/aoc2019/aoc2019.js';
 init().then(() => {
   window.aoc2019 = aoc2019;
   window.postMessage('aoc2019');
