@@ -3,9 +3,7 @@ mod intcode;
 
 pub fn run_intcode(insts: &[i32]) -> Vec<i32> {
   let mut program = intcode::Intcode::new(insts, &[]);
-  println!("before: {:?}", program.insts);
   program.run();
-  println!("after: {:?}", program.insts);
   program.insts
 }
 

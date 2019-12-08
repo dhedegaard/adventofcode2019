@@ -38,7 +38,6 @@ impl Intcode {
   pub fn run(&mut self) -> Vec<i32> {
     let mut result = vec![];
     loop {
-      println!("  pc: {}, isnts: {:?}", self.pc, self.insts);
       match self.execute() {
         IntcodeState::Halt => break,
         IntcodeState::Output(e) => result.push(e),

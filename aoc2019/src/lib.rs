@@ -1,3 +1,4 @@
+extern crate permutohedron;
 extern crate wasm_bindgen;
 
 use wasm_bindgen::prelude::*;
@@ -8,6 +9,7 @@ mod day03;
 mod day04;
 mod day05;
 mod day06;
+mod day07;
 mod intcode;
 
 #[wasm_bindgen]
