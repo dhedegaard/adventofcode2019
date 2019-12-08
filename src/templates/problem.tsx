@@ -35,6 +35,11 @@ const InputTextField = styled(TextField)`
   }
 `
 
+const ResultTypography = styled(Typography)`
+  font-family: "Courier New", Courier, monospace;
+  line-height: 1;
+`
+
 const Center = styled.div`
   width: 100%;
   display: flex;
@@ -318,7 +323,10 @@ const Problem: React.FC<Props> = props => {
           </Typography>
           {state.result !== "" && (
             <ResultBox square>
-              <Typography paragraph>Result: {state.result}</Typography>
+              <Typography paragraph>Result:</Typography>
+              <ResultTypography paragraph component="pre">
+                {state.result}
+              </ResultTypography>
               <Typography paragraph>
                 Duration:{" "}
                 {(state.duration! / 1000).toLocaleString(undefined, {
