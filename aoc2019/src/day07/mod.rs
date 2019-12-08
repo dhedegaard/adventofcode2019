@@ -107,4 +107,9 @@ mod tests {
       65210
     );
   }
+
+  #[test]
+  fn test_part1_result() {
+    assert_eq!(part1(&parse_input(&raw_input())), 14902);
+  }
 }
