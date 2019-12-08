@@ -90,3 +90,16 @@ pub fn day06_part1(input: &str) -> String {
 pub fn day06_part2(input: &str) -> String {
   day06::part2(input).to_string()
 }
+
+#[wasm_bindgen]
+pub fn day08_input() -> String {
+  day08::raw_input()
+}
+#[wasm_bindgen]
+pub fn day08_part1(input: &str) -> String {
+  day08::part1(&day08::parse_input(input, 25, 6)).to_string()
+}
+#[wasm_bindgen]
+pub fn day08_part2(input: &str) -> String {
+  day08::part2(&day08::parse_input(input, 25, 6)).to_string()
+}

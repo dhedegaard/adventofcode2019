@@ -17,7 +17,7 @@ pub fn raw_input() -> String {
   include_str!("input.txt").to_string()
 }
 
-fn parse_input(input: &str, width: usize, height: usize) -> Layers {
+pub fn parse_input(input: &str, width: usize, height: usize) -> Layers {
   let mut ints = input
     .chars()
     .map(|c| c.to_digit(10).unwrap() as i32)
@@ -45,31 +45,34 @@ pub fn part1(input: &Layers) -> usize {
 pub fn part2(input: &Layers) -> String {
   let height = input[0].height;
   let width = input[0].width;
-  let mut image: Vec<String> = vec![];
-  for y in 0..height {
-    let mut row: Vec<i32> = vec![];
-    for x in 0..width {
-      let mut pixel = 0;
-      for layer in input {
-        let layer_pixel = layer.data[y * width + x];
-        if layer_pixel != 2 {
-          pixel = layer_pixel;
-          break;
+  let mut image: Vec<Vec<i32>> = vec![vec![2; width]; height];
+  for layer in input {
+    for y in 0..height {
+      for x in 0..width {
+        if image[y][x] == 2 {
+          image[y][x] = layer.data[x + y * width];
         }
       }
-      row.push(pixel);
     }
-    image.push(row.iter().map(|e| e.to_string()).collect::<String>());
   }
-  let result = image.join("\n");
-  result
-    .chars()
-    .map(|c| match c {
-      '0' => '#',
-      '1' => ' ',
-      c => c,
+  pretty_print_layer(&image)
+}
+
+fn pretty_print_layer(image: &[Vec<i32>]) -> String {
+  image
+    .iter()
+    .map(|row| {
+      row
+        .iter()
+        .map(|i| match i {
+          0 | 2 => '█',
+          1 => ' ',
+          _ => panic!("Weird int: {}", i),
+        })
+        .collect::<String>()
     })
-    .collect::<String>()
+    .collect::<Vec<_>>()
+    .join("\n")
 }
 
 #[cfg(test)]
@@ -88,12 +91,16 @@ mod tests {
 
   #[test]
   fn test_example2() {
-    assert_eq!(part2(&parse_input("0222112222120000", 2, 2)), "# \n #");
+    assert_eq!(part2(&parse_input("0222112222120000", 2, 2)), "█ \n █");
   }
 
-  // #[test]
-  // fn test_part2() {
-  //   let result = part2(&parse_input(&raw_input(), 25, 6));
-  //   println!("part2:\n{}", result);
-  // }
+  #[test]
+  fn test_part2() {
+    let result = part2(&parse_input(&raw_input(), 25, 6));
+    // TODO: Something is sort of off with the pixels, may fix later?
+    assert_eq!(
+      result,
+      "    █   ██    █ ██ ██  ██\n███ █ ██ ████ █ ██ █ ██ █\n██ █████ ███ ██ ████   ██\n█ ███ █ ███ ███ ██ █ ██ █\n ████ ████ ████ ████ ████\n   ██ ████  █ ██  ██   ██"
+    );
+  }
 }
