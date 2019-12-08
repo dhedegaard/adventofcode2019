@@ -6,7 +6,8 @@ const problemsQuery = graphql`
       filter: {
         sourceInstanceName: { eq: "problems" }
         name: { eq: "mod" }
-        extension: { eq: "rs" }
+        extension: {}
+        dir: { glob: "**/day*" }
       }
       sort: { fields: dir, order: ASC }
     ) {
