@@ -13,7 +13,6 @@ pub fn parse_input(input: &str) -> Vec<i32> {
 }
 
 fn run_perm(insts: &[i32], perm: &[i32]) -> i32 {
-  println!("perm: {:?}", perm);
   let mut amps: Vec<intcode::Intcode> = vec![];
 
   let mut output: i32 = 0;
@@ -21,12 +20,9 @@ fn run_perm(insts: &[i32], perm: &[i32]) -> i32 {
     let mut input = vec![];
     input.push(perm[i]);
     input.push(output);
-    println!("{}: input: {:?}", i, input);
     let mut amp = intcode::Intcode::new(&insts, &input);
     output = amp.run()[0];
-    println!("{}: output: {:?}", i, output);
   }
-  println!("output: {}", output);
   output
 }
 
@@ -41,6 +37,39 @@ pub fn part1(insts: &[i32]) -> i32 {
     }
   }
   highest
+}
+
+fn run_perm_part2(insts: &[i32], perm: &[i32]) -> i32 {
+  let mut amps: Vec<intcode::Intcode> = vec![];
+
+  let mut output: i32 = 0;
+  for i in 0..5 {
+    let mut input = vec![];
+    input.push(perm[i]);
+    if i == 0 {
+      input.push(output);
+    }
+    amps.push(intcode::Intcode::new(&insts, &input));
+  }
+  let mut running = 0;
+  while amps.iter().any(|e| e.state != intcode::IntcodeState::Halt) {
+    let mut amp = &mut amps[running];
+    if amp.state == intcode::IntcodeState::Halt {
+      running = (running + 1) % perm.len();
+      continue;
+    }
+    match amp.execute() {
+      intcode::IntcodeState::Output(out) => {
+        if running == perm.len() - 1 {
+          output = out;
+        }
+        amps[(running + 1) % perm.len()].input.push(out)
+      }
+      _ => {}
+    }
+    running = (running + 1) % perm.len();
+  }
+  output
 }
 
 #[cfg(test)]
@@ -111,5 +140,34 @@ mod tests {
   #[test]
   fn test_part1_result() {
     assert_eq!(part1(&parse_input(&raw_input())), 14902);
+  }
+
+  #[test]
+  fn test_run_perm_part2_example1() {
+    assert_eq!(
+      run_perm_part2(
+        &[
+          3, 26, 1001, 26, -4, 26, 3, 27, 1002, 27, 2, 27, 1, 27, 26, 27, 4, 27, 1001, 28, -1, 28,
+          1005, 28, 6, 99, 0, 0, 5
+        ],
+        &[9, 8, 7, 6, 5]
+      ),
+      139629729
+    );
+  }
+
+  #[test]
+  fn test_run_perm_part2_example2() {
+    assert_eq!(
+      run_perm_part2(
+        &[
+          3, 52, 1001, 52, -5, 52, 3, 53, 1, 52, 56, 54, 1007, 54, 5, 55, 1005, 55, 26, 1001, 54,
+          -5, 54, 1105, 1, 12, 1, 53, 54, 53, 1008, 54, 0, 55, 1001, 55, 1, 55, 2, 53, 55, 53, 4,
+          53, 1001, 56, -1, 56, 1005, 56, 6, 99, 0, 0, 0, 0, 10
+        ],
+        &[9, 7, 8, 5, 6]
+      ),
+      18216
+    );
   }
 }

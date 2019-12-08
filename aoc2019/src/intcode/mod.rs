@@ -6,6 +6,7 @@ pub enum IntcodeState {
   Output(i32),
 }
 
+#[derive(Debug)]
 pub struct Intcode {
   pub insts: Vec<i32>,
   pub pc: i32,
@@ -70,7 +71,7 @@ impl Intcode {
       3 => {
         // Input
         let res = self.get_registry(operation, 1, true) as usize;
-        if self.insts.is_empty() {
+        if self.input.is_empty() {
           return IntcodeState::NeedInput;
         }
         self.insts[res] = self.input.remove(0);
