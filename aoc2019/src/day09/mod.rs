@@ -20,6 +20,10 @@ pub fn part1(input: &[i64]) -> i64 {
   run_intcode(input, &[1])[0]
 }
 
+pub fn part2(input: &[i64]) -> i64 {
+  run_intcode(input, &[2])[0]
+}
+
 #[cfg(test)]
 mod tests {
   use super::*;
@@ -54,5 +58,10 @@ mod tests {
   #[test]
   fn test_part1() {
     assert_eq!(part1(&parse_input(&raw_input())), 2671328082);
+  }
+
+  #[test]
+  fn test_part2() {
+    assert_eq!(part2(&parse_input(&raw_input())), 2671328082);
   }
 }
