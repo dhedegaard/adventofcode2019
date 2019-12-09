@@ -28,19 +28,23 @@ impl Intcode {
 
   fn get_registry(&mut self, operation: i64, param: usize, addr: bool) -> i64 {
     let val = self.insts[self.pc as usize + param];
-    let mask = (operation as u32) / (10_u32.pow(param as u32 + 1)) % 10;
-    assert!(!addr || mask == 0);
-    if !addr && mask == 0 {
-      let pos = val as usize;
-      self.ensure_size(pos);
-      self.insts[pos]
-    } else if mask == 2 {
-      let pos = (val + self.relative_base) as usize;
-      self.ensure_size(pos);
-      self.insts[pos]
-    } else {
-      val
+    let param_mode = (operation as u32) / (10_u32.pow(param as u32 + 1)) % 10;
+    if addr {
+      return match param_mode {
+        0 => val,
+        2 => val + self.relative_base,
+        _ => panic!("Weird parameter in addr mode: {}", param_mode),
+      };
     }
+    assert!(!(addr && param_mode == 1));
+    let pos = match param_mode {
+      0 => val as usize,
+      1 => return val,
+      2 => (val + self.relative_base) as usize,
+      _ => panic!("Weird parameter mode: {}", param_mode),
+    };
+    self.ensure_size(pos);
+    self.insts[pos]
   }
 
   /// Runs the entire program to completion and returns the input.
@@ -65,6 +69,7 @@ impl Intcode {
         let a = self.get_registry(operation, 1, false);
         let b = self.get_registry(operation, 2, false);
         let res = self.get_registry(operation, 3, true) as usize;
+        self.ensure_size(res);
         self.insts[res] = a + b;
         self.pc += 4;
       }
@@ -73,6 +78,7 @@ impl Intcode {
         let a = self.get_registry(operation, 1, false);
         let b = self.get_registry(operation, 2, false);
         let res = self.get_registry(operation, 3, true) as usize;
+        self.ensure_size(res);
         self.insts[res] = a * b;
         self.pc += 4;
       }
@@ -82,6 +88,7 @@ impl Intcode {
         if self.input.is_empty() {
           return IntcodeState::NeedInput;
         }
+        self.ensure_size(res);
         self.insts[res] = self.input.remove(0);
         self.pc += 2;
       }
@@ -114,6 +121,7 @@ impl Intcode {
         let a = self.get_registry(operation, 1, false);
         let b = self.get_registry(operation, 2, false);
         let res = self.get_registry(operation, 3, true) as usize;
+        self.ensure_size(res);
         self.insts[res] = if a < b { 1 } else { 0 };
         self.pc += 4;
       }
@@ -142,7 +150,12 @@ impl Intcode {
 
   fn ensure_size(&mut self, size: usize) {
     if self.insts.len() < size {
-      self.insts.resize(size + 2, 0);
+      self.insts.resize(size + 1, 0);
+      if self.relative_base > 0 {
+        self
+          .insts
+          .resize(size + (self.relative_base as usize) + 1, 0);
+      }
     }
   }
 }
