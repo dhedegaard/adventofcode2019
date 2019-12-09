@@ -3,40 +3,44 @@ pub enum IntcodeState {
   Running,
   Halt,
   NeedInput,
-  Output(i32),
+  Output(i64),
 }
 
 #[derive(Debug)]
 pub struct Intcode {
-  pub insts: Vec<i32>,
-  pub pc: i32,
+  pub insts: Vec<i64>,
+  pc: i64,
   pub state: IntcodeState,
-  pub input: Vec<i32>,
+  pub input: Vec<i64>,
+  relative_base: i64,
 }
 
 impl Intcode {
-  pub fn new(insts: &[i32], input: &[i32]) -> Intcode {
+  pub fn new(insts: &[i64], input: &[i64]) -> Intcode {
     Intcode {
       insts: insts.to_vec(),
       pc: 0,
       state: IntcodeState::Running,
       input: input.to_vec(),
+      relative_base: 0,
     }
   }
 
-  fn get_registry(&self, operation: i32, param: usize, addr: bool) -> i32 {
+  fn get_registry(&self, operation: i64, param: usize, addr: bool) -> i64 {
     let val = self.insts[self.pc as usize + param];
     let mask = (operation as u32) / (10_u32.pow(param as u32 + 1)) % 10;
     assert!(!addr || mask == 0);
     if !addr && mask == 0 {
       self.insts[val as usize]
+    } else if mask == 2 {
+      self.insts[(val + self.relative_base) as usize]
     } else {
       val
     }
   }
 
   /// Runs the entire program to completion and returns the input.
-  pub fn run(&mut self) -> Vec<i32> {
+  pub fn run(&mut self) -> Vec<i64> {
     let mut result = vec![];
     loop {
       match self.execute() {
@@ -51,6 +55,7 @@ impl Intcode {
   pub fn execute(&mut self) -> IntcodeState {
     let operation = self.insts[self.pc as usize];
     let opcode = operation % 100;
+    println!("operation: {}", operation);
     match opcode {
       1 => {
         // Addition
@@ -116,6 +121,12 @@ impl Intcode {
         let res = self.get_registry(operation, 3, true) as usize;
         self.insts[res] = if a == b { 1 } else { 0 };
         self.pc += 4;
+      }
+      9 => {
+        // adjust relative base
+        self.relative_base += self.get_registry(operation, 1, false);
+        println!("RB: {}", self.relative_base);
+        self.pc += 2;
       }
       // Halt
       99 => {

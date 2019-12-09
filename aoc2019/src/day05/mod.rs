@@ -1,7 +1,7 @@
 #[path = "../intcode/mod.rs"]
 mod intcode;
 
-fn run_intcode(insts: &[i32], input: &[i32]) -> Vec<i32> {
+fn run_intcode(insts: &[i64], input: &[i64]) -> Vec<i64> {
   let mut program = intcode::Intcode::new(insts, input);
   program.run()
 }
@@ -10,18 +10,18 @@ pub fn raw_input() -> String {
   include_str!("input.txt").to_string()
 }
 
-pub fn parse_input(input: &str) -> Vec<i32> {
+pub fn parse_input(input: &str) -> Vec<i64> {
   input
     .split(',')
     .map(|e| e.replace(",", "").replace("+", "").parse::<_>().unwrap())
     .collect()
 }
 
-pub fn part1(input: &str) -> i32 {
+pub fn part1(input: &str) -> i64 {
   *run_intcode(&parse_input(input), &[1]).last().unwrap()
 }
 
-pub fn part2(input: &str) -> i32 {
+pub fn part2(input: &str) -> i64 {
   *run_intcode(&parse_input(input), &[5]).last().unwrap()
 }
 

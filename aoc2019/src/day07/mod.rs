@@ -5,17 +5,17 @@ pub fn raw_input() -> String {
   include_str!("input.txt").to_string()
 }
 
-pub fn parse_input(input: &str) -> Vec<i32> {
+pub fn parse_input(input: &str) -> Vec<i64> {
   input
     .split(',')
     .map(|e| e.replace(",", "").replace("+", "").parse::<_>().unwrap())
     .collect()
 }
 
-fn run_perm(insts: &[i32], perm: &[i32]) -> i32 {
+fn run_perm(insts: &[i64], perm: &[i64]) -> i64 {
   let mut amps: Vec<intcode::Intcode> = vec![];
 
-  let mut output: i32 = 0;
+  let mut output: i64 = 0;
   for i in 0..5 {
     let mut input = vec![];
     input.push(perm[i]);
@@ -26,7 +26,7 @@ fn run_perm(insts: &[i32], perm: &[i32]) -> i32 {
   output
 }
 
-pub fn part1(insts: &[i32]) -> i32 {
+pub fn part1(insts: &[i64]) -> i64 {
   let mut options = vec![0, 1, 2, 3, 4];
   let mut permutations = permutohedron::Heap::new(&mut options);
   let mut highest = 0;
@@ -39,10 +39,10 @@ pub fn part1(insts: &[i32]) -> i32 {
   highest
 }
 
-fn run_perm_part2(insts: &[i32], perm: &[i32]) -> i32 {
+fn run_perm_part2(insts: &[i64], perm: &[i64]) -> i64 {
   let mut amps: Vec<intcode::Intcode> = vec![];
 
-  let mut output: i32 = 0;
+  let mut output: i64 = 0;
   for i in 0..5 {
     let mut input = vec![];
     input.push(perm[i]);
@@ -72,7 +72,7 @@ fn run_perm_part2(insts: &[i32], perm: &[i32]) -> i32 {
   output
 }
 
-pub fn part2(insts: &[i32]) -> i32 {
+pub fn part2(insts: &[i64]) -> i64 {
   let mut options = vec![5, 6, 7, 8, 9];
   let mut permutations = permutohedron::Heap::new(&mut options);
   let mut highest = 0;
