@@ -26,14 +26,18 @@ impl Intcode {
     }
   }
 
-  fn get_registry(&self, operation: i64, param: usize, addr: bool) -> i64 {
+  fn get_registry(&mut self, operation: i64, param: usize, addr: bool) -> i64 {
     let val = self.insts[self.pc as usize + param];
     let mask = (operation as u32) / (10_u32.pow(param as u32 + 1)) % 10;
     assert!(!addr || mask == 0);
     if !addr && mask == 0 {
-      self.insts[val as usize]
+      let pos = val as usize;
+      self.ensure_size(pos);
+      self.insts[pos]
     } else if mask == 2 {
-      self.insts[(val + self.relative_base) as usize]
+      let pos = (val + self.relative_base) as usize;
+      self.ensure_size(pos);
+      self.insts[pos]
     } else {
       val
     }
@@ -55,7 +59,6 @@ impl Intcode {
   pub fn execute(&mut self) -> IntcodeState {
     let operation = self.insts[self.pc as usize];
     let opcode = operation % 100;
-    println!("operation: {}", operation);
     match opcode {
       1 => {
         // Addition
@@ -119,13 +122,13 @@ impl Intcode {
         let a = self.get_registry(operation, 1, false);
         let b = self.get_registry(operation, 2, false);
         let res = self.get_registry(operation, 3, true) as usize;
+        self.ensure_size(res);
         self.insts[res] = if a == b { 1 } else { 0 };
         self.pc += 4;
       }
       9 => {
         // adjust relative base
         self.relative_base += self.get_registry(operation, 1, false);
-        println!("RB: {}", self.relative_base);
         self.pc += 2;
       }
       // Halt
@@ -135,5 +138,11 @@ impl Intcode {
       _ => panic!("Unknown opcode: {}", opcode),
     }
     self.state.clone()
+  }
+
+  fn ensure_size(&mut self, size: usize) {
+    if self.insts.len() < size {
+      self.insts.resize(size + 2, 0);
+    }
   }
 }
