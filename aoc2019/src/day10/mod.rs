@@ -1,4 +1,5 @@
 use std::collections::HashSet;
+use std::f64::consts::PI;
 use std::iter::FromIterator;
 
 pub fn raw_input() -> String {
@@ -30,6 +31,15 @@ fn gcd(a: isize, b: isize) -> isize {
   _a
 }
 
+fn to_angle((x, y): (isize, isize)) -> f64 {
+  let d = (y as f64).atan2(x as f64) + PI / 2.0;
+  if d < 0.0 {
+    2.0 * PI + d
+  } else {
+    d
+  }
+}
+
 fn get_slopes(width: isize, height: isize) -> Vec<(isize, isize)> {
   let mut result = vec![];
   for y in -height..height + 1 {
@@ -39,6 +49,7 @@ fn get_slopes(width: isize, height: isize) -> Vec<(isize, isize)> {
       }
     }
   }
+  result.sort_by(|&a, &b| to_angle(a).partial_cmp(&to_angle(b)).unwrap());
   result
 }
 
@@ -63,11 +74,35 @@ fn traverse_slope(
   None
 }
 
-pub fn part1(input: &HashSet<(isize, isize)>) -> usize {
+fn vaporize_slope(
+  asteroids: &HashSet<(isize, isize)>,
+  (x, y): (isize, isize),
+  (dx, dy): (isize, isize),
+  width: isize,
+  height: isize,
+) -> Option<(isize, isize)> {
+  let (mut new_x, mut new_y) = (x, y);
+  while new_x > 0 && new_x <= width && new_y > 0 && new_y <= height {
+    new_x += dx;
+    new_y += dy;
+    if asteroids.contains(&(new_x, new_y)) {
+      return Some((new_x, new_y));
+    }
+  }
+  None
+}
+
+struct CountAndPosition {
+  count: usize,
+  position: (isize, isize),
+}
+
+fn max_count_and_position(input: &HashSet<(isize, isize)>) -> CountAndPosition {
   let width = 2 + input.iter().map(|&(x, _)| x).max().unwrap() as isize;
   let height = 2 + input.iter().map(|&(_, y)| y).max().unwrap() as isize;
   let slopes = get_slopes(width, height);
   let mut max = 0;
+  let mut max_pos: (isize, isize) = (0, 0);
   for asteroid in input {
     let count = slopes
       .iter()
@@ -76,9 +111,35 @@ pub fn part1(input: &HashSet<(isize, isize)>) -> usize {
       .count();
     if count > max {
       max = count;
+      max_pos = *asteroid;
     }
   }
-  max
+  CountAndPosition {
+    count: max,
+    position: max_pos,
+  }
+}
+
+pub fn part1(input: &HashSet<(isize, isize)>) -> usize {
+  max_count_and_position(input).count
+}
+
+pub fn part2(input: &mut HashSet<(isize, isize)>) -> isize {
+  let width = 2 + input.iter().map(|&(x, _)| x).max().unwrap() as isize;
+  let height = 2 + input.iter().map(|&(_, y)| y).max().unwrap() as isize;
+  let slopes = get_slopes(width, height);
+  let station = max_count_and_position(input).position;
+  let mut num_hit = 0;
+  for &slope in slopes.iter().cycle() {
+    if let Some(hit) = traverse_slope(&input, station, slope, width, height) {
+      input.remove(&hit);
+      num_hit += 1;
+      if num_hit == 200 {
+        return hit.0 * 100 + hit.1;
+      }
+    }
+  }
+  panic!("panic");
 }
 
 #[cfg(test)]
@@ -140,5 +201,10 @@ mod tests {
   #[test]
   fn test_part1_result() {
     assert_eq!(part1(&parse_input(&raw_input())), 214);
+  }
+
+  #[test]
+  fn test_part2_result() {
+    assert_eq!(part2(&mut parse_input(&raw_input())), 502);
   }
 }
