@@ -74,24 +74,6 @@ fn traverse_slope(
   None
 }
 
-fn vaporize_slope(
-  asteroids: &HashSet<(isize, isize)>,
-  (x, y): (isize, isize),
-  (dx, dy): (isize, isize),
-  width: isize,
-  height: isize,
-) -> Option<(isize, isize)> {
-  let (mut new_x, mut new_y) = (x, y);
-  while new_x > 0 && new_x <= width && new_y > 0 && new_y <= height {
-    new_x += dx;
-    new_y += dy;
-    if asteroids.contains(&(new_x, new_y)) {
-      return Some((new_x, new_y));
-    }
-  }
-  None
-}
-
 struct CountAndPosition {
   count: usize,
   position: (isize, isize),
