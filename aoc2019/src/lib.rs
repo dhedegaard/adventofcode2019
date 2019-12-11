@@ -145,3 +145,16 @@ pub fn day10_part1(input: &str) -> String {
 pub fn day10_part2(input: &str) -> String {
   day10::part2(&mut day10::parse_input(input)).to_string()
 }
+
+#[wasm_bindgen]
+pub fn day11_input() -> String {
+  day11::raw_input()
+}
+#[wasm_bindgen]
+pub fn day11_part1(input: &str) -> String {
+  day11::part1(&day11::parse_input(input)).to_string()
+}
+#[wasm_bindgen]
+pub fn day11_part2(input: &str) -> String {
+  day11::part2(&day11::parse_input(input)).to_string()
+}

@@ -58,7 +58,7 @@ fn determine_new_direction(old_direction: &Direction, inst: i64) -> Direction {
   }
 }
 
-fn part1(insts: &[i64]) -> usize {
+pub fn part1(insts: &[i64]) -> usize {
   let mut painting: HashMap<(i64, i64), Color> = HashMap::new();
   let mut pos = (0, 0);
   let mut dir = Direction::Up;
@@ -119,7 +119,7 @@ fn paint_blacks(points: &[(i64, i64)]) -> String {
   lines.join("\n")
 }
 
-fn part2(insts: &[i64]) -> String {
+pub fn part2(insts: &[i64]) -> String {
   let mut painting: HashMap<(i64, i64), Color> = HashMap::new();
   painting.insert((0, 0), Color::White);
   let mut pos = (0, 0);
