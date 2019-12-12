@@ -50,7 +50,7 @@ pub fn parse_input(input: &str) -> Vec<Moon> {
     .collect()
 }
 
-fn part1(input: &mut [Moon]) -> i64 {
+pub fn part1(input: &mut [Moon]) -> i64 {
   for _ in 0..1000 {
     for i in 0..input.len() {
       for j in (i + 1)..input.len() {
@@ -91,7 +91,7 @@ fn run_axis(moon: &[i64]) -> i64 {
   steps as i64 + 1
 }
 
-fn part2(input: &mut [Moon]) -> i64 {
+pub fn part2(input: &mut [Moon]) -> i64 {
   let x = run_axis(&input.iter().map(|e| e.pos.0).collect::<Vec<_>>());
   let y = run_axis(&input.iter().map(|e| e.pos.1).collect::<Vec<_>>());
   let z = run_axis(&input.iter().map(|e| e.pos.2).collect::<Vec<_>>());
