@@ -1,3 +1,4 @@
+extern crate num_integer;
 extern crate permutohedron;
 extern crate regex;
 extern crate wasm_bindgen;
