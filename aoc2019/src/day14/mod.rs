@@ -56,7 +56,7 @@ fn ore_cost(fuel: i64, reactions: &HashMap<String, Reaction>) -> i64 {
   unreachable!()
 }
 
-fn part1(reactions: &HashMap<String, Reaction>) -> i64 {
+pub fn part1(reactions: &HashMap<String, Reaction>) -> i64 {
   ore_cost(1, reactions)
 }
 
@@ -76,7 +76,7 @@ fn optimal_ore_cost(chemical: String, reactions: &HashMap<String, Reaction>) -> 
     .sum()
 }
 
-fn part2(reactions: &HashMap<String, Reaction>) -> i64 {
+pub fn part2(reactions: &HashMap<String, Reaction>) -> i64 {
   const TRILLION: i64 = 1_000_000_000_000;
   let upper_bound =
     (TRILLION as f64 / optimal_ore_cost("FUEL".to_string(), reactions)).floor() as i64;
