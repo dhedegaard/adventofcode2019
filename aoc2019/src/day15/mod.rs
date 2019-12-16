@@ -116,7 +116,6 @@ pub fn part2(program: Intcode) -> usize {
       if !valid_spots.contains(&new_pos) || visited.contains_key(&new_pos) {
         continue;
       }
-      println!("POS: {:?} - DEPTH: {:?}", new_pos, item.depth + 1);
       queue.push_back(PartTwoItem {
         pos: new_pos,
         depth: item.depth + 1,
