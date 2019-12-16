@@ -6,7 +6,7 @@ use std::collections::{HashMap, HashSet, VecDeque};
 use intcode::*;
 
 #[derive(Debug)]
-pub enum Position {
+enum Position {
   Wall,
   Valid,
   OxygenSystem,
@@ -16,7 +16,7 @@ pub fn raw_input() -> String {
   include_str!("input.txt").to_string()
 }
 
-fn parse_input(input: &str) -> Intcode {
+pub fn parse_input(input: &str) -> Intcode {
   Intcode::new(
     &input
       .split(",")
@@ -88,8 +88,43 @@ fn build_grid(program: Intcode) -> (HashSet<(i64, i64)>, usize, (i64, i64)) {
   (valid_spots, result.unwrap(), result_pos)
 }
 
-fn part1(program: Intcode) -> usize {
+pub fn part1(program: Intcode) -> usize {
   build_grid(program).1
+}
+
+struct PartTwoItem {
+  pos: (i64, i64),
+  depth: usize,
+}
+
+pub fn part2(program: Intcode) -> usize {
+  let (valid_spots, _, start_pos) = build_grid(program);
+  let mut queue: VecDeque<PartTwoItem> = VecDeque::new();
+  queue.push_back(PartTwoItem {
+    pos: start_pos,
+    depth: 0,
+  });
+  let mut visited: HashMap<(i64, i64), usize> = HashMap::new();
+  visited.insert(start_pos, 0);
+  while let Some(item) = queue.pop_front() {
+    for (new_pos, input) in vec![
+      ((item.pos.0, item.pos.1 - 1), 1), // North
+      ((item.pos.0, item.pos.1 + 1), 2), // South
+      ((item.pos.0 - 1, item.pos.1), 3), // West
+      ((item.pos.0 + 1, item.pos.1), 4), // East
+    ] {
+      if !valid_spots.contains(&new_pos) || visited.contains_key(&new_pos) {
+        continue;
+      }
+      println!("POS: {:?} - DEPTH: {:?}", new_pos, item.depth + 1);
+      queue.push_back(PartTwoItem {
+        pos: new_pos,
+        depth: item.depth + 1,
+      });
+      visited.insert(new_pos, item.depth + 1);
+    }
+  }
+  *visited.values().max().unwrap()
 }
 
 #[cfg(test)]
@@ -99,5 +134,10 @@ mod tests {
   #[test]
   fn test_part1() {
     assert_eq!(part1(parse_input(&raw_input())), 280);
+  }
+
+  #[test]
+  fn test_part2() {
+    assert_eq!(part2(parse_input(&raw_input())), 400);
   }
 }
