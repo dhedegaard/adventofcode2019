@@ -21,6 +21,7 @@ mod day13;
 mod day14;
 mod day15;
 mod day16;
+mod day21;
 mod intcode;
 
 #[wasm_bindgen]
@@ -229,4 +230,17 @@ pub fn day16_part1(input: &str) -> String {
 #[wasm_bindgen]
 pub fn day16_part2(input: &str) -> String {
   day16::part2(&mut day16::parse_input(input)).to_string()
+}
+
+#[wasm_bindgen]
+pub fn day21_input() -> String {
+  day21::raw_input()
+}
+#[wasm_bindgen]
+pub fn day21_part1(input: &str) -> String {
+  day21::part1(&mut day21::parse_input(input)).to_string()
+}
+#[wasm_bindgen]
+pub fn day21_part2(input: &str) -> String {
+  day21::part2(&mut day21::parse_input(input)).to_string()
 }
