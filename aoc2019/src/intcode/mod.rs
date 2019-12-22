@@ -153,12 +153,12 @@ impl Intcode {
   }
 
   fn ensure_size(&mut self, size: usize) {
-    if self.insts.len() < size {
-      let bounds = if self.relative_base > 0 {
-        size + (self.relative_base as usize) + 1
-      } else {
-        size + 1
-      };
+    let bounds = if self.relative_base > 0 {
+      size + (self.relative_base as usize) + 1
+    } else {
+      size + 1
+    };
+    if self.insts.len() < bounds {
       self.insts.resize(bounds + 1, 0);
     }
   }
