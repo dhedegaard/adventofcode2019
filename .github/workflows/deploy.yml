@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag aoc2019
     - name: Extract the build
-      run: mkdir ./output && docker run -i --rm -v `pwd`/output:/output cp -rv /app/output /output
+      run: mkdir ./output && docker run -i --rm -v `pwd`/output:/output aoc2019 cp -rv /app/output /output
