@@ -18,6 +18,6 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v2.1.0
         with:
           build_dir: ./output
-          fqdn: "aoc2019.dhedegaard.dk"
+          fqdn: aoc2019.dhedegaard.dk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
