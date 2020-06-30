@@ -2,25 +2,22 @@ name: Deploy
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag aoc2019
-    - name: Extract the build
-      run: mkdir ./output && docker run -i --rm -v `pwd`/output:/output aoc2019 sh -c "cp -rv /app/public/* /output"
-    - name: Setup CNAME
-      run: echo "aoc2019.dhedegaard.dk" > ./output/CNAME
-    - name: Deploy to GitHub Pages
-      uses: crazy-max/ghaction-github-pages@v2.1.0
-      with:
-        build_dir: ./output
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag aoc2019
+      - name: Extract the build
+        run: mkdir ./output && docker run -i --rm -v `pwd`/output:/output aoc2019 sh -c "cp -rv /app/public/* /output"
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v2.1.0
+        with:
+          build_dir: ./output
+          fqdn: "aoc2019.dhedegaard.dk"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
