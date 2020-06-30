@@ -22,4 +22,4 @@ jobs:
       with:
         build_dir: ./output
       env:
-        GITHUB_PAT: ${{ secrets.GH_PAT }}
+        GH_PAT: ${{ secrets.GH_PAT }}
