@@ -1,21 +1,20 @@
-name: Rust
+name: Run rust tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --verbose
-      working-directory: aoc2019
-    - name: Run tests
-      run: cargo test --verbose
-      working-directory: aoc2019
+      - uses: actions/checkout@v2
+      - name: Build
+        run: cargo build --verbose
+        working-directory: aoc2019
+      - name: Run tests
+        run: cargo test --verbose
+        working-directory: aoc2019
