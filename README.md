@@ -1,7 +1,9 @@
 # Advent of Code 2019
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/94151f22-07cb-4cda-8115-3c3ac4f4caff/deploy-status)](https://app.netlify.com/sites/dhedegaard-aoc2019/deploys)
 [![Build Status](https://dev.azure.com/dhedegaard/adventofcode2019/_apis/build/status/dhedegaard.adventofcode2019?branchName=master)](https://dev.azure.com/dhedegaard/adventofcode2019/_build/latest?definitionId=10&branchName=master)
+![Deploy](https://github.com/dhedegaard/adventofcode2019/workflows/Deploy/badge.svg)
+![Build gatsby](https://github.com/dhedegaard/adventofcode2019/workflows/Build%20gatsby/badge.svg)
+![Run rust tests](https://github.com/dhedegaard/adventofcode2019/workflows/Run%20rust%20tests/badge.svg)
 
 Solutions in rust, build to web assembly and running in your favorite browser.
 
