@@ -7,8 +7,11 @@ RUN sh -c "curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 # Add the rust code.
 COPY ./aoc2019 ./
 
+# Run the tests.
+RUN cargo test --release
+
 # Build it.
-RUN  wasm-pack build --out-dir /output --target=web
+RUN wasm-pack build --out-dir /output --target=web
 
 FROM node
 WORKDIR /app
