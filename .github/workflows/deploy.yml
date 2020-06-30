@@ -1,0 +1,20 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag aoc2019
+    - name: Extract the build
+      run: mkdir ./output && docker run -it --rm -v `pwd`/output:/output cp -rv /app/output /output
