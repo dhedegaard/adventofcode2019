@@ -13,11 +13,11 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag aoc2019
       - name: Extract the build
-        run: mkdir ./output && docker run -i --rm -v `pwd`/output:/output aoc2019 sh -c "cp -rv /app/public/* /output"
+        run: mkdir -p /output && docker run -i --rm -v /output:/output aoc2019 sh -c "cp -rv /app/public/* /output"
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2.1.0
         with:
-          build_dir: ./output
+          build_dir: /output
           fqdn: aoc2019.dhedegaard.dk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
