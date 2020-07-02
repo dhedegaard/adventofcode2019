@@ -74,4 +74,5 @@ out
 aoc2019/target
 
 .git
-
+.github
+.vscode

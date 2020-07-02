@@ -13,7 +13,7 @@ RUN cargo test --release
 # Build it.
 RUN wasm-pack build --out-dir /output --target=web
 
-FROM node
+FROM node AS gatsby-build
 WORKDIR /app
 
 # Add the source and the wasm build.
@@ -22,3 +22,7 @@ COPY --from=wasm-build /output ./static/aoc2019
 
 # Build output to "/app/public"
 RUN yarn && yarn start
+
+# Serve the thing with nginx.
+FROM nginx
+COPY --from=gatsby-build /app/public /usr/share/nginx/html
