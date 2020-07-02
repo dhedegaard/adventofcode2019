@@ -1,0 +1,14 @@
+name: Build Docker image
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the image
+        run: docker build . --file Dockerfile --tag aoc2019
