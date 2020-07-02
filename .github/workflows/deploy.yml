@@ -14,6 +14,7 @@ jobs:
         run: docker build . --file Dockerfile --tag aoc2019
       - name: Extract the build
         run: mkdir -p ./output && docker run -i --rm -v `pwd`/output:/output aoc2019 sh -c "cp -rv /app/public/* /output"
+      - run: find ./output
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2.1.0
         with:
