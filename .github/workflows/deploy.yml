@@ -10,10 +10,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag aoc2019
+      - name: Build and start the container
+        run: docker build . --file Dockerfile --tag aoc2019 && docker run --rm --name aoc2019 aoc2019
       - name: Extract the build
-        run: mkdir -p ./output && docker run -i --rm -v `pwd`/output:/output aoc2019 sh -c "cp -rv /usr/share/nginx/html* /output"
+        run: mkdir -p output &&  docker cp aoc2019:/usr/share/nginx/html/* ./output
       - run: find ./output
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2.1.0
